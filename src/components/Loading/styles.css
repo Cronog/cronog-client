@@ -1,0 +1,31 @@
+.container-loading {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+.is-loading {
+	width: 35px;
+	height: 35px;
+	transition: 0.5s ease-in-out;
+	animation: animation 1s infinite;
+	background: conic-gradient(
+			from 90deg,
+			transparent 12.5%,
+			#79a326 12.5%,
+			#79a326 37.5%,
+			transparent 37.5%,
+			transparent 62.5%,
+			#8015a3 62.5%,
+			#8015a3 87.5%,
+			transparent 87.5%
+		)
+		50% 50% / 32% 50% no-repeat;
+}
+
+@keyframes animation {
+	100% {
+		transform: rotate(360deg);
+	}
+}

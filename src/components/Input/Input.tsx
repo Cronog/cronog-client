@@ -34,7 +34,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
 	}
 
 	return (
-		<div className="flex flex-col justify-end">
+		<div className={`flex flex-col justify-end w-full ${props.styleContainer}`}>
 			<input
 				id={props.id}
 				defaultValue={props.initialValue}

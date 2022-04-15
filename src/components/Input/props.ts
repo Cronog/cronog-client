@@ -4,6 +4,7 @@ export default interface Props {
 	name: string;
 	initialValue?: string;
 	style?: string;
+	styleContainer?: string;
 	placeholder?: string;
 	disabled?: boolean;
 	maxLength?: number;

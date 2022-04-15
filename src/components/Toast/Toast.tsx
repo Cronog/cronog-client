@@ -6,7 +6,7 @@ import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles.css';
 
-export const showToast = (type: string, text: string): void => {
+export const showToast = (type: string, text: string | undefined): void => {
 	switch (type) {
 		case 'success':
 			toast.success(text);

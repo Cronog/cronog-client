@@ -1,12 +1,16 @@
 .Toastify__toast--success {
 	background: green !important;
+	color: white;
 }
 .Toastify__toast--warning {
 	background: blue !important;
+	color: white;
 }
 .Toastify__toast--error {
 	background: red !important;
+	color: white;
 }
 .Toastify__close-button {
 	align-self: center !important;
+	color: white;
 }

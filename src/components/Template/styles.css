@@ -1,0 +1,31 @@
+.container-template{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-areas: 
+      "header-template"
+      "body-template";
+    grid-template-rows: 60px calc(100% - 60px);
+}
+
+.header-template{
+    grid-area: header-template;
+}
+
+.body-template{
+    grid-area: body-template;
+    display: grid;
+    grid-template-areas: 
+    "content"
+    "keyboard";
+    grid-template-rows: 100%;
+}
+
+.content{
+    grid-area: content;
+}
+
+.keyboard{
+    grid-area: keyboard;
+}
+

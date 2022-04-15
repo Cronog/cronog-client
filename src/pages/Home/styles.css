@@ -1,0 +1,61 @@
+.header-home{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    width: 100%;
+}
+
+.header-home > div > input{
+    -webkit-box-shadow: 5px 5px 15px -4px #000000; 
+    box-shadow: 5px 5px 15px -4px #000000;
+}
+
+.body-home{
+    overflow-x: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 15px 0;
+}
+
+.container-btn-add-cronog{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+
+.container-btn-add-cronog > button{
+    border-radius: 50%;
+    height: 80px !important;
+    width: 80px !important;
+    font-size: 60px;
+    display: flex;
+    min-width: auto;
+    align-items: center;
+    justify-content: center;
+    -webkit-box-shadow: 5px 5px 15px -4px #000000; 
+    box-shadow: 5px 5px 15px -4px #000000;
+}
+
+.container-btn-add-cronog > button > svg{
+    display: initial;
+}
+
+.input-search{
+    border-color: var(--main-color) !important;
+    background-color: var(--main-color) !important;
+}
+
+.input-search:focus{
+    outline: none;
+}
+
+@media (min-width: 1200px) {
+    .body-home{
+        overflow: overlay;
+    }
+  }

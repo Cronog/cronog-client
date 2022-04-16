@@ -2,7 +2,7 @@ export default interface Props {
 	id: string;
 	type: string;
 	name: string;
-	initialValue?: string;
+	initialValue: string;
 	style?: string;
 	disabled?: boolean;
 	events: {

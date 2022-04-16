@@ -26,13 +26,16 @@ const Select: ForwardRefRenderFunction<HTMLSelectElement, Props> = (
 			defaultValue={props.initialValue}
 			className={`default-select ${props.style}`}
 			disabled={props.disabled}
+			
 			onChange={(event) => handleChange(event.target.value)}
 			onFocus={(event) => handleFocus(event.target.value)}>
-			{props.options.map((opt) => (
-				<option key={opt.value} value={opt.value}>
+			{props.options.map((opt) => {
+				return (
+				<option selected={opt.value == props.initialValue ? true : false} key={opt.value} value={opt.value}>
 					{opt.text}
 				</option>
-			))}
+				)
+				})}
 		</select>
 	);
 };

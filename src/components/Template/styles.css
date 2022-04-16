@@ -10,6 +10,16 @@
 
 .header-template{
     grid-area: header-template;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 20px 10px;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.header-template div:only-child{
+    margin-left: auto;
 }
 
 .body-template{
@@ -23,6 +33,7 @@
 
 .content{
     grid-area: content;
+    padding: 20px;
 }
 
 .keyboard{

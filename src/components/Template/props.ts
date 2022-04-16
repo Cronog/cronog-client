@@ -6,4 +6,5 @@ export default interface Props {
     renderHeader?: ReactElement;
     styleBody?: string;
     renderBody: ReactElement;
+    colorMenuHamburguer?: string
 }

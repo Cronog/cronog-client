@@ -1,32 +1,37 @@
 import { useHistory } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import Template from "../../components/Template";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
-import { showToast } from "../../components/Toast/Toast";
-import Loading from "../../components/Loading";
+import Template from "../../../components/Template";
+import Button from "../../../components/Button";
+import Input from "../../../components/Input";
+import { showToast } from "../../../components/Toast/Toast";
+import Loading from "../../../components/Loading";
 
-import { Login as loginType } from "../../types/Login";
+import { Login as loginType } from "../../../types/Login";
 
-import * as authUtils from "../../utils/auth";
+import * as authUtils from "../../../utils/auth";
 
-import "./styles.css";
-import { Keyboard } from "@capacitor/keyboard";
+import "../auth.styles.css";
 
-const logo = require("../../assets/logo.JPG");
+const logo = require("../../../assets/logo.JPG");
 
 const Login = () : JSX.Element => {
 
   const history = useHistory();
 
-  const [contentButton, setContentButton] = useState<any>("Entrar")
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [emailParam, setEmailParam] = useState<string | undefined>("")
 
   const refEmail = useRef<HTMLInputElement>(null);
   const refPassword = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if(authUtils.authenticatedUser(true))
+      history.push("/home")
+  }, [])
+
   const singIn = async () => {
-    setContentButton(<Loading size="30" />)
+    setIsLoading(true)
     const response = await authUtils.singIn({
       email: refEmail.current?.value,
       password: refPassword.current?.value
@@ -34,51 +39,52 @@ const Login = () : JSX.Element => {
     if(response.success){
       history.push("/home")
     }else{
-      setContentButton("Entrar")
+      setIsLoading(false)
       showToast("error", response.message)
     }
   }
 
   return (
     <Template
-    styleScreen="container-login color-login"
+    styleScreen="container-auth color-auth"
     styleBody="flex flex-col items-center"
     renderBody={
       <>
       <img src={logo} />
-      <div className="w-full h-full flex flex-col px-10 items-center overflow-y-auto">
+      <div className="w-full h-full flex flex-col px-10 items-center flex-1">
         <Input
         id="login.email"
         name="login.email"
         type="email"
         placeholder="Email"
         styleContainer="mt-20"
-        style="input-login color-login"
+        style="input-auth color-auth"
         ref={refEmail}
-        events={{}}
+        events={{
+          onChange: (value) => setEmailParam(value)
+        }}
         />
         <Input
         id="login.password"
         name="login.password"
         type="password"
         placeholder="Senha"
-        style="mt-5 input-login color-login"
+        style="mt-5 input-auth color-auth"
         ref={refPassword}
         events={{}}
         />
         <Button
-        style="btn-login"
+        style="btn-auth"
         type="button"
-        action={() => singIn()}
+        action={singIn}
         >
-          
-          {contentButton}
+          {isLoading ? <Loading size="30" /> : "Entrar"}
         </Button>
         <div className="flex flex-col justify-center h-full">
-          <a href="/">
+          <a href={`/auth/recovery/${emailParam}`}>
             Esqueci minha senha
           </a>
-          <a >
+          <a href={`/auth/register/${emailParam}`}>
             Ainda não tem conta?
           </a>
         </div>

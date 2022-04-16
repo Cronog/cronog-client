@@ -44,6 +44,10 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
 				maxLength={props.maxLength}
 				minLength={props.minLength}
 				disabled={props.disabled}
+				onInput={(event) => { 
+					if(event.currentTarget.value.length > event.currentTarget.maxLength)
+						event.currentTarget.value = event.currentTarget.value.slice(0, event.currentTarget.maxLength)
+				}}
 				onChange={(event) => handleChange(event.target.value)}
 				onFocus={(event) => handleFocus(event.target.value)}
 				onKeyDown={handlePressEnter}

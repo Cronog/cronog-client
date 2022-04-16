@@ -1,0 +1,29 @@
+#container-menu{
+    top: 0;
+    right: 0;
+    height: 100%;
+    display: none;
+    background-color: var(--main-color-dark);
+    width: 70%;
+    position: absolute;
+    flex-direction: column;
+    padding: 10px;
+}
+
+#container-menu * {
+    font-size: 30px;
+    font-weight: 800;
+    color: white;
+}
+
+#container-menu a {
+    text-align: center;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+#container-menu > div {
+    color: white !important;
+}

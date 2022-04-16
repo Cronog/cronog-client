@@ -1,23 +1,14 @@
-.header-home{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    width: 100%;
-}
-
-.header-home > div > input{
-    -webkit-box-shadow: 5px 5px 15px -4px #000000; 
-    box-shadow: 5px 5px 15px -4px #000000;
-}
-
 .body-home{
+    padding: 0 20px 0 20px ;
+}
+
+.list-cronog{
     overflow-x: auto;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-    padding: 15px 0;
+    justify-content: space-between;
+    height: 90%;
 }
 
 .container-btn-add-cronog{

@@ -6,12 +6,14 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 import Toast from './components/Toast';
+import Menu from './components/Menu';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <App />
       <Toast />
+      <Menu />
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

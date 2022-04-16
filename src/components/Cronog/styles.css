@@ -1,6 +1,10 @@
 .container-cronog{
-    height: 170px;
-    width: 170px;
+    height: 190px;
+    width: 48%;
     border: 1px solid black;
     margin-bottom: 15px;
+}
+
+.container-cronog:last-child{
+    margin-right: auto;
 }

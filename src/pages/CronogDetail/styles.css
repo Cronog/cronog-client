@@ -1,0 +1,18 @@
+.header-cronog{
+    color: white;
+    background-color: blue;
+    display: flex;
+    align-items: center;
+}
+
+.btn-back{
+    position: absolute;
+    font-size: 40px;
+}
+
+.title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 25px;
+    width: 100%;
+}

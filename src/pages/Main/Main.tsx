@@ -1,36 +1,50 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Path from '../../components/Path';
-import Cronog from '../Cronog';
+import CronogConfig from '../CronogConfig';
 import Home from '../Home';
-import Login from '../Login';
+import Login from '../Auth/Login';
+import Register from '../Auth/Register';
 
 import lockedRoutes from '../../utils/routes';
 
 import './styles.css';
+import Recovery from '../Auth/Recovery';
+
+import * as authUtils from "../../utils/auth";
 
 function Main() {
 
-  const historico = useHistory();
+  const history = useHistory();
 
     useEffect(() => {
-      if(historico){
-        if(lockedRoutes().find(item => item === historico.location.pathname)){
-          historico.push("/login");
+      if(!authUtils.authenticatedUser(true)){
+        if(history){
+          if(lockedRoutes().find(item => item === history.location.pathname)){
+            history.push("auth/login");
+          }
         }
+      }else{
+        history.push("/home")
       }
-    }, [historico])
+    }, [history])
 
   return (
     <div id="container-main">
-      <Path path='/login' exact>
+      <Path path='/auth/login' exact>
         <Login />
+      </Path>
+      <Path path='/auth/register/:email?' exact>
+        <Register />
+      </Path>
+      <Path path='/auth/recovery/:email?'>
+        <Recovery />
       </Path>
       <Path path='/home' exact>
         <Home />
       </Path>
       <Path path='/home/cronog/:id?'>
-        <Cronog />
+        <CronogConfig />
       </Path>
     </div>
   );

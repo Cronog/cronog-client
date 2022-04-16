@@ -1,0 +1,46 @@
+.color-auth{
+    background-color: var(--main-color);
+}
+
+.container-body-auth{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+img{
+    width: 50%;
+}
+
+.input-auth{
+    color: white;
+    border: none;
+    border-bottom: 1px solid white;
+    text-align: center;
+    font-size: 20px;
+}
+
+.input-auth::-webkit-input-placeholder{
+    color: white;
+    opacity: 0.6;
+}
+
+.input-auth:focus{
+    outline: none;
+}
+
+.btn-auth {
+    background-color: white !important;
+    color: var(--main-color);
+    margin-top: 40px;
+    width: 100%;
+    min-height: 80px;
+    font-weight: 800;
+    font-size: 20px
+}
+
+.container-auth a {
+    margin-top: 30px;
+    color: white;
+    font-size: 20px;
+} 

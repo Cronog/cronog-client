@@ -6,6 +6,7 @@
     "@capacitor/android": "^3.4.3",
     "@capacitor/core": "^3.4.3",
     "@capacitor/keyboard": "^1.2.2",
+    "@capacitor/storage": "^1.2.5",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",

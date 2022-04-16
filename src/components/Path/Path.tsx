@@ -9,7 +9,6 @@ import store from '../../redux/store';
 const Rota: FunctionComponent<Props> = (props): JSX.Element => {
 
 	const RotaPrivada = ({...rest}) => {
-  
 		return <Route {...rest} render={props =>  {
 			// const resposta = loginUtils.usuarioLogado(rest.exigeAutenticacao);
 			const logged = true;
@@ -27,13 +26,6 @@ const Rota: FunctionComponent<Props> = (props): JSX.Element => {
 	return (
 		<Switch>
 			<RotaPrivada route={props.path} {...props} />
-			{/* <Route
-				exact={props.exact}
-				path={props.path}
-				component={() =>
-					<Provider store={store}>{props.children}</Provider>
-				}
-			/> */}
 		</Switch>
 	);
 };

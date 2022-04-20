@@ -18,17 +18,16 @@ const logo = require("../../../assets/logo.JPG");
 const Login = () : JSX.Element => {
 
   const history = useHistory();
-
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [emailParam, setEmailParam] = useState<string | undefined>("")
-
   const refEmail = useRef<HTMLInputElement>(null);
   const refPassword = useRef<HTMLInputElement>(null);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [emailParam, setEmailParam] = useState<string | undefined>("");
 
   useEffect(() => {
     if(authUtils.authenticatedUser(true))
       history.push("/home")
-  }, [])
+  }, [history])
 
   const singIn = async () => {
     setIsLoading(true)
@@ -46,19 +45,21 @@ const Login = () : JSX.Element => {
 
   return (
     <Template
-    styleScreen="container-auth color-auth"
-    styleBody="flex flex-col items-center"
+    classCssScreen="container-auth color-auth"
+    hideMenuHamburguer={true}
+    colorBody="var(--main-color)"
+    classCssBody="flex flex-col items-center"
     renderBody={
       <>
-      <img src={logo} />
+      <img src={logo} alt=""/>
       <div className="w-full h-full flex flex-col px-10 items-center flex-1">
         <Input
         id="login.email"
         name="login.email"
         type="email"
         placeholder="Email"
-        styleContainer="mt-20"
-        style="input-auth color-auth"
+        classCssContainer="mt-20"
+        classCss="input-auth color-auth"
         ref={refEmail}
         events={{
           onChange: (value) => setEmailParam(value)
@@ -69,12 +70,12 @@ const Login = () : JSX.Element => {
         name="login.password"
         type="password"
         placeholder="Senha"
-        style="mt-5 input-auth color-auth"
+        classCss="mt-5 input-auth color-auth"
         ref={refPassword}
         events={{}}
         />
         <Button
-        style="btn-auth"
+        classCss="btn-auth"
         type="button"
         action={singIn}
         >

@@ -3,8 +3,8 @@ export default interface Props {
 	type: string;
 	name: string;
 	initialValue?: string;
-	style?: string;
-	styleContainer?: string;
+	classCss?: string;
+	classCssContainer?: string;
 	placeholder?: string;
 	disabled?: boolean;
 	maxLength?: number;

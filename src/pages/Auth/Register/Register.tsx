@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import Loading from "../../../components/Loading";
@@ -18,6 +18,7 @@ const Register = () => {
 
     const refEmail = useRef<HTMLInputElement>(null);
     const refPassword = useRef<HTMLInputElement>(null);
+    const refRepeatPassword = useRef<HTMLInputElement>(null);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     
@@ -25,6 +26,12 @@ const Register = () => {
     const { email } = useParams<{ email?: string}>();
 
     const register = async () => {
+
+      if(!validRepeatPassword(refRepeatPassword.current?.value || "")){
+        showToast("error", "As senhas são diferentes")
+        return
+      }
+
         setIsLoading(true);
         const response = await authUtils.register({
             email: refEmail.current?.value,
@@ -39,24 +46,23 @@ const Register = () => {
         }
     }
 
-    const validRepeatPassword = (password : string) => {
-        if(password != refPassword.current?.value){
-
+    const validRepeatPassword = (password : string) : boolean => {
+        if(password !== refPassword.current?.value){
+          return false;
         }
+        return true;
     }
 
   return (
     <Template
-    styleScreen="container-auth color-auth"
-    renderHeader={
-        <Link to="/auth/login">
-            <IoIosArrowBack size={"50"}/>
-        </Link>
-    }
-    styleBody="flex flex-col items-center"
+    classCssScreen="container-auth color-auth"
+    hideMenuHamburguer={true}
+    colorBody="var(--main-color)"
+    renderHeader={<IoIosArrowBack onClick={() => history.push("/auth/login")} size={"50"}/>}
+    classCssBody="flex flex-col items-center"
     renderBody={
       <>
-      <img src={logo} />
+      <img src={logo} alt=""/>
       <div className="w-full h-full flex flex-col px-10 items-center overflow-y-auto">
         <Input
         id="register.email"
@@ -64,8 +70,8 @@ const Register = () => {
         type="email"
         placeholder="Email"
         initialValue={email}
-        styleContainer="mt-20"
-        style="input-auth color-auth"
+        classCssContainer="mt-20"
+        classCss="input-auth color-auth"
         ref={refEmail}
         events={{}}
         />
@@ -74,7 +80,7 @@ const Register = () => {
         name="register.password"
         type="password"
         placeholder="Senha"
-        style="mt-5 input-auth color-auth"
+        classCss="mt-5 input-auth color-auth"
         ref={refPassword}
         events={{}}
         />
@@ -83,11 +89,12 @@ const Register = () => {
         name="register.repeatPassword"
         type="password"
         placeholder="Repita a senha"
-        style="mt-5 input-auth color-auth"
+        classCss="mt-5 input-auth color-auth"
+        ref={refRepeatPassword}
         events={{}}
         />
         <Button
-        style="btn-auth"
+        classCss="btn-auth"
         type="button"
         action={register}
         >

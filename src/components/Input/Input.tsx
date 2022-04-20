@@ -34,14 +34,14 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
 	}
 
 	return (
-		<div className={`flex flex-col justify-end w-full ${props.styleContainer}`}>
+		<div className={`flex flex-col justify-end w-full ${props.classCssContainer}`}>
 			<input
 				id={props.id}
 				defaultValue={props.initialValue}
-				className={`default-input ${props.style}`}
+				className={`default-input ${props.type === "color" ? "!hidden" : ""} ${props.classCss}`}
 				type={props.type}
 				placeholder={props.placeholder}
-				maxLength={props.maxLength}
+				maxLength={props.maxLength || 9999}
 				minLength={props.minLength}
 				disabled={props.disabled}
 				onInput={(event) => { 
@@ -53,6 +53,14 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
 				onKeyDown={handlePressEnter}
 				ref={ref}
 			/>
+			{props.type === "color" && (
+				<label 
+				className={`default-input ${props.classCss}`}
+				style={{
+					backgroundColor: props.initialValue
+				}} 
+				htmlFor={props.id}></label>
+				)}
 			{props.maxLength && (
 				<div className="text-right text-sm">
 					{`${valueLength}/${props.maxLength}`}

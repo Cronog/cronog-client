@@ -6,5 +6,9 @@
 	{
 		"pkg": "@capacitor/storage",
 		"classpath": "com.capacitorjs.plugins.storage.StoragePlugin"
+	},
+	{
+		"pkg": "@mufan/capacitor-plugin-gesture",
+		"classpath": "com.mufan.capacitor.plugin.gesture.GesturePlugin"
 	}
 ]

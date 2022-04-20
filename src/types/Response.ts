@@ -1,8 +1,8 @@
-export type Response = {
+export type Response<T = {}> = {
     success: boolean,
     status: number,
     message?: string
-    data?: any
+    data?: T
 }
 
 export default Response;

@@ -23,7 +23,7 @@ const Checkbox: ForwardRefRenderFunction<HTMLInputElement, Props> = (
 				type="checkbox"
 				id={props.id}
 				defaultChecked={props.initialValue}
-				className={`w-full ${props.style}`}
+				className={`w-full ${props.classCss}`}
 				disabled={props.disabled}
 				onChange={(event) => handleChange(event.target.value)}
 				ref={ref}

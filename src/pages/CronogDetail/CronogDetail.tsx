@@ -1,25 +1,28 @@
 import Template from "../../components/Template";
 
 import "./styles.css";
-import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import BackButton from "../../components/BackButton";
 
 const CronogDetail = () => {
 
-  const { id } = useParams<{ id?: string}>();
-  const [titlePage, setTitlePage] = useState<string>();
-
-  useEffect(() => {
-    if(id){
-      setTitlePage("Editar Cronog");
-    }else{
-      setTitlePage("Novo Cronog");
-    }
-  }, [id])
+  const { id, title, color } = useParams<{ id: string, title: string, color: string }>();
 
   return (
-    <></>
+    <Template 
+    colorHeader={color.replace("@", "#")}
+    classCssHeader="text-white"
+    colorMenuHamburguer="white"
+    renderHeader={
+      <>
+        <BackButton path="/home" color="white"/>
+        <p>{title.replace("-", " ")}</p>
+      </>
+    }
+    renderBody={
+      <></>
+    }
+    />
   )
 }
 

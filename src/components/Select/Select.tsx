@@ -24,7 +24,7 @@ const Select: ForwardRefRenderFunction<HTMLSelectElement, Props> = (
 			id={props.id}
 			name={props.name}
 			defaultValue={props.initialValue}
-			className={`default-select ${props.style}`}
+			className={`default-select ${props.classCss}`}
 			disabled={props.disabled}
 			
 			onChange={(event) => handleChange(event.target.value)}

@@ -7,3 +7,6 @@ project(':capacitor-keyboard').projectDir = new File('../node_modules/@capacitor
 
 include ':capacitor-storage'
 project(':capacitor-storage').projectDir = new File('../node_modules/@capacitor/storage/android')
+
+include ':mufan-capacitor-plugin-gesture'
+project(':mufan-capacitor-plugin-gesture').projectDir = new File('../node_modules/@mufan/capacitor-plugin-gesture/android')

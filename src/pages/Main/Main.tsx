@@ -12,6 +12,7 @@ import './styles.css';
 import Recovery from '../Auth/Recovery';
 
 import * as authUtils from "../../utils/auth";
+import CronogDetail from '../CronogDetail';
 
 function Main() {
 
@@ -43,8 +44,11 @@ function Main() {
       <Path path='/home' exact>
         <Home />
       </Path>
-      <Path path='/home/cronog/:id?'>
+      <Path path='/home/cronog-config/:id?'>
         <CronogConfig />
+      </Path>
+      <Path path='/home/cronog-detail/:id/:title/:color'>
+        <CronogDetail />
       </Path>
     </div>
   );

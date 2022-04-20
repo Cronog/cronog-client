@@ -7,7 +7,7 @@ const Button: FunctionComponent<Props> = (props): JSX.Element => {
 	return (
 		<button
 			type={props.type ?? 'button'}
-			className={`default-btn ${props.style}`}
+			className={`default-btn ${props.classCss}`}
 			onClick={props.action}>
 			{props.children}
 		</button>

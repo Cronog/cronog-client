@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Template from "../../../components/Template";
 import { showToast } from "../../../components/Toast/Toast";
 import "../auth.styles.css";
@@ -35,12 +35,14 @@ const Recovery = () => {
 
   return (
     <Template
-    styleScreen="container-auth color-auth"
+    classCssHeader="container-auth color-auth"
+    hideMenuHamburguer={true}
+    colorBody="var(--main-color)"
     renderHeader={<IoIosArrowBack onClick={() => history.push("/auth/login")} size={"50"}/>}
-    styleBody="flex flex-col items-center"
+    classCssBody="flex flex-col items-center"
     renderBody={
       <>
-      <img src={logo} />
+      <img src={logo} alt=""/>
       <div className="w-full h-full flex flex-col px-10 items-center overflow-y-auto">
         <Input
         id="recovery.email"
@@ -48,13 +50,13 @@ const Recovery = () => {
         type="email"
         placeholder="Email"
         initialValue={email}
-        styleContainer="mt-20"
-        style="input-auth color-auth"
+        classCssContainer="mt-20"
+        classCss="input-auth color-auth"
         ref={refEmail}
         events={{}}
         />
         <Button
-        style="btn-auth"
+        classCss="btn-auth"
         type="button"
         action={recovery}
         >

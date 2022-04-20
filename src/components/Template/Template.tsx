@@ -1,8 +1,7 @@
 
 
 import { Keyboard } from "@capacitor/keyboard";
-import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useState } from "react";
 import HamburguerMenu from "../HamburguerMenu";
 import Props from "./props";
 
@@ -11,8 +10,6 @@ import "./styles.css";
 const Template = (props : Props) => {
 
   const [sizeKeyboard, setSizeKeyboard] = useState<number>(0);
-
-  const history = useHistory();
 
   Keyboard.addListener("keyboardWillShow", info => {
     setSizeKeyboard(info.keyboardHeight); 
@@ -23,16 +20,22 @@ const Template = (props : Props) => {
   })
 
   return (
-      <div id="container-template" className={`container-template ${props.styleScreen}`}>
-        <div className={`header-template ${props.styleHeader}`}>
+      <div id="container-template" className={`container-template ${props.classCssScreen}`}>
+        <div className={`header-template ${props.classCssHeader}`}
+        style={{
+          "--color-header": props.colorHeader || "var(--main-color)"
+        } as React.CSSProperties}>
             {props.renderHeader ? props.renderHeader : <></>}
-            {history.location.pathname.indexOf("/auth") == -1 ? <HamburguerMenu color={props.colorMenuHamburguer} /> : <></> }
+            {props.hideMenuHamburguer ? <></> : <HamburguerMenu color={props.colorMenuHamburguer} /> }
         </div>
         <div className={`body-template`}
         style={{
           overflowY: sizeKeyboard > 0 ? 'auto' : 'hidden'
         }}>
-          <div className={`content ${props.styleBody}`}>
+          <div className={`content ${props.classCssBody}`}
+          style={{
+            "--color-body": props.colorBody || "white"
+          } as React.CSSProperties}>
             {props.renderBody}
           </div>
           <div className="keyboard"

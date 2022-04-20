@@ -2,6 +2,7 @@ import { chamarBackEnd } from "./backend";
 
 import Login from "../types/Login";
 import Response from "../types/Response";
+import { Credentials } from "../types/Credentials";
 
 export const singIn = async (login : Login) : Promise<Response> => {
     const response = await chamarBackEnd("POST", "/auth/singin", login)
@@ -12,8 +13,9 @@ export const singIn = async (login : Login) : Promise<Response> => {
     return response;
 }
 
-export const singOut = async (callback: any) => {
+export const singOut = async (callback?: void) => {
     localStorage.removeItem('user');
+    window.location.pathname = "/auth/login"
 }
 
 export const recovery = async (email : string) : Promise<Response> => {
@@ -40,4 +42,12 @@ export const authenticatedUser = (requireAuthentication : boolean) : boolean => 
     }else{
         return true
     }
+}
+
+export const getCredentials = () : Credentials | undefined  => {
+    const credentials = localStorage.getItem("user")
+    
+    if(!credentials) return undefined;
+    
+    return JSON.parse(credentials) as Credentials;
 }

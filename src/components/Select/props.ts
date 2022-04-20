@@ -3,7 +3,7 @@ export default interface Props {
 	type: string;
 	name: string;
 	initialValue: string;
-	style?: string;
+	classCss?: string;
 	disabled?: boolean;
 	events: {
 		onChange?: (value?: string) => void;

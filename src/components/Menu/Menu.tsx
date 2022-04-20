@@ -8,17 +8,19 @@ const Menu = () => {
 
   const closeMenu = () => {
     const element = document.getElementById("container-menu");
-    if(element)
-      element.style.display = "none";
+    if(element){
+      element.style.width = "0";
+      element.style.padding = "0"
+    }
   }
 
   return (
         <div id="container-menu">
           <div className="flex justify-end mb-5">
-            <IoClose 
-            size={40}
-            onClick={closeMenu}
-            />
+                <IoClose 
+                size={40}
+                onClick={closeMenu}
+                />
           </div>
             <a href="/home" onClick={closeMenu} >
                 Home

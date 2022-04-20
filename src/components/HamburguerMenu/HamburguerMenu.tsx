@@ -10,20 +10,24 @@ function HamburguerMenu(props : Props) {
     const showMenu = () => {
         const element = document.getElementById("container-menu");
         if(element){
-            element.style.display = "flex"
+             element.style.width = "70%"
+             element.style.padding = "10px"
         }
     }
 
   return (
       <>
         <div>
-            <GiHamburgerMenu 
-            size={30}
-            style={{
-                color: props.color || "black"
-            }}
-            onClick={() => showMenu()}
-            />
+        <input type="checkbox" id="menu" hidden={true} />
+            <label htmlFor="menu">
+                <GiHamburgerMenu 
+                size={30}
+                style={{
+                    color: props.color || "black"
+                }}
+                onClick={() => showMenu()}
+                />
+            </label>
         </div>
       </>
   )

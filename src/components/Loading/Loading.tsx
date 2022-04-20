@@ -1,4 +1,4 @@
-import {FunctionComponent} from 'react';
+import React, {FunctionComponent} from 'react';
 
 import Props from './props';
 
@@ -12,7 +12,8 @@ const Loading: FunctionComponent<Props> = (props): JSX.Element => {
 				style={{
 					width: `${props.size}px`,
 					height: `${props.size}px`,
-				}}
+					"--color-loading" : props.color || "var(--main-color)"
+				} as React.CSSProperties}
 			/>
 		</div>
 	);

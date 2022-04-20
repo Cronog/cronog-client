@@ -1,10 +1,13 @@
 import { ReactElement } from "react";
 
 export default interface Props {
-    styleScreen?: string;
-    styleHeader?: string;
+    classCssScreen?: string;
+    classCssHeader?: string;
     renderHeader?: ReactElement;
-    styleBody?: string;
+    classCssBody?: string;
     renderBody: ReactElement;
-    colorMenuHamburguer?: string
+    colorMenuHamburguer?: string;
+    hideMenuHamburguer?: boolean;
+    colorHeader?: string;
+    colorBody?: string;
 }

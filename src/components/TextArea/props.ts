@@ -3,9 +3,12 @@ export default interface Props {
 	name: string;
 	initialValue?: string;
 	classCss?: string;
+	colorText?: string;
+	colorBorder?: string;
+	colorBackground?: string;
 	placeholder?: string;
 	disabled?: boolean;
-	length?: number;
+	maxLength?: number;
 	rows?: number;
 	events: {
 		onChange?: (value?: string) => void;

@@ -2,6 +2,7 @@ import {
 	forwardRef,
 	ForwardRefRenderFunction,
 	KeyboardEvent,
+	useEffect,
 	useState,
 } from 'react';
 
@@ -16,6 +17,10 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
 	const [valueLength, setValueLength] = useState<number>(0);
 
 	const {onChange, onFocus, onPressEnter} = props.events;
+
+	useEffect(() => {
+		if(props.initialValue) setValueLength(props.initialValue.length)
+	}, [props.initialValue]);
 
 	function handleChange(value: string): void {
 		if (props.maxLength) setValueLength(value.length);
@@ -34,7 +39,12 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
 	}
 
 	return (
-		<div className={`flex flex-col justify-end w-full ${props.classCssContainer}`}>
+		<div className={`flex flex-col justify-end w-full ${props.classCssContainer}`}
+		style={{
+			"--color-input-text": props.colorText || "black",
+			"--color-input-border": props.colorBorder || "black",
+			opacity: props.disabled ? 0.6 : 1
+        } as React.CSSProperties}>
 			<input
 				id={props.id}
 				defaultValue={props.initialValue}
@@ -62,7 +72,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, Props> = (
 				htmlFor={props.id}></label>
 				)}
 			{props.maxLength && (
-				<div className="text-right text-sm">
+				<div className="color-input-length text-right text-sm">
 					{`${valueLength}/${props.maxLength}`}
 				</div>
 			)}

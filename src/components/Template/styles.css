@@ -2,6 +2,7 @@
     width: 100%;
     height: 100%;
     display: grid;
+    background-color: var(--color-container);
     grid-template-areas: 
       "header-template"
       "body-template";
@@ -17,6 +18,9 @@
     font-size: 25px;
     font-weight: 700;
     background-color: var(--color-header);
+    color: white;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 .header-template div:only-child{

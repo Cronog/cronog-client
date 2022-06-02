@@ -7,7 +7,7 @@ import './styles.css';
 const Select: ForwardRefRenderFunction<HTMLSelectElement, Props> = (
 	props,
 	ref
-): JSX.Element => {
+) => {
 	const {onChange, onFocus} = props.events;
 
 	function handleChange(value: string): void {
@@ -18,15 +18,21 @@ const Select: ForwardRefRenderFunction<HTMLSelectElement, Props> = (
 		if (onFocus) onFocus(value);
 	}
 
+	console.log(props.initialValue)
+	
 	return (
 		<select
+			style={{
+				"--color-select-text": props.colorText || "black",
+				"--color-select-border": props.colorBorder || "black",
+				opacity: props.disabled ? 0.6 : 1
+			} as React.CSSProperties}
 			ref={ref}
 			id={props.id}
 			name={props.name}
 			defaultValue={props.initialValue}
-			className={`default-select ${props.classCss}`}
+			className={`default-select border-opacity-20 ${props.classCss}`}
 			disabled={props.disabled}
-			
 			onChange={(event) => handleChange(event.target.value)}
 			onFocus={(event) => handleFocus(event.target.value)}>
 			{props.options.map((opt) => {

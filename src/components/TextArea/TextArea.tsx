@@ -2,6 +2,7 @@ import {
 	forwardRef,
 	ForwardRefRenderFunction,
 	KeyboardEvent,
+	useEffect,
 	useState,
 } from 'react';
 
@@ -17,8 +18,12 @@ const TextArea: ForwardRefRenderFunction<HTMLTextAreaElement, Props> = (
 
 	const {onChange, onFocus, onPressEnter} = props.events;
 
+	useEffect(() => {
+		if(props.initialValue) setValueLength(props.initialValue.length)
+	}, [props.initialValue]);
+
 	function handleChange(value: string): void {
-		if (props.length) setValueLength(value.length);
+		if (props.maxLength) setValueLength(value.length);
 
 		if (onChange) onChange(value);
 	}
@@ -34,23 +39,30 @@ const TextArea: ForwardRefRenderFunction<HTMLTextAreaElement, Props> = (
 	}
 
 	return (
-		<div className="flex flex-col justify-end">
+		<div className="flex flex-col justify-end"
+			style={{
+				"--color-textarea-text": props.colorText || "black",
+				"--color-textarea-border": props.colorBorder || "black",
+				"--color-textarea-background": props.colorBackground || "transparent",
+				opacity: props.disabled ? 0.6 : 1
+			} as React.CSSProperties}
+		>
 			<textarea
 				ref={ref}
 				id={props.id}
 				defaultValue={props.initialValue}
 				className={`default-textarea ${props.classCss}`}
 				placeholder={props.placeholder}
-				maxLength={props.length}
+				maxLength={props.maxLength}
 				disabled={props.disabled}
 				rows={props.rows || 2}
 				onChange={(event) => handleChange(event.target.value)}
 				onFocus={(event) => handleFocus(event.target.value)}
 				onKeyDown={handlePressEnter}
 			/>
-			{props.length && (
-				<div className="text-right text-sm">
-					{`${valueLength}/${props.length}`}
+			{props.maxLength && (
+				<div className="color-textarea-length text-right text-sm">
+					{`${valueLength}/${props.maxLength}`}
 				</div>
 			)}
 		</div>

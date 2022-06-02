@@ -13,9 +13,9 @@ import * as authUtils from "../../../utils/auth";
 
 import "../auth.styles.css";
 
-const logo = require("../../../assets/logo.JPG");
+const logo = require("../../../assets/logo.png");
 
-const Login = () : JSX.Element => {
+const Login = () => {
 
   const history = useHistory();
   const refEmail = useRef<HTMLInputElement>(null);
@@ -25,8 +25,7 @@ const Login = () : JSX.Element => {
   const [emailParam, setEmailParam] = useState<string | undefined>("");
 
   useEffect(() => {
-    if(authUtils.authenticatedUser(true))
-      history.push("/home")
+    // authUtils.authenticatedUser(true).then(data => data ? history.push("/home") : "")
   }, [history])
 
   const singIn = async () => {
@@ -51,14 +50,13 @@ const Login = () : JSX.Element => {
     classCssBody="flex flex-col items-center"
     renderBody={
       <>
-      <img src={logo} alt=""/>
+      <img src={logo} className="logo" alt=""/>
       <div className="w-full h-full flex flex-col px-10 items-center flex-1">
         <Input
         id="login.email"
         name="login.email"
         type="email"
         placeholder="Email"
-        classCssContainer="mt-20"
         classCss="input-auth color-auth"
         ref={refEmail}
         events={{
@@ -76,10 +74,11 @@ const Login = () : JSX.Element => {
         />
         <Button
         classCss="btn-auth"
+        textColor="var(--main-color)"
         type="button"
         action={singIn}
         >
-          {isLoading ? <Loading size="30" /> : "Entrar"}
+          {isLoading ? <Loading size="40" /> : "Entrar"}
         </Button>
         <div className="flex flex-col justify-center h-full">
           <a href={`/auth/recovery/${emailParam}`}>

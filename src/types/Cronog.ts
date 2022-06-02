@@ -1,11 +1,13 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import * as yup from 'yup';
 import { Days } from "./Days";
+import { Task } from './Task';
 import { typeCronog } from "./TypeCronog";
 
 export type Cronog = {
     id: string,
     userId: string,
+    notificationId: number,
     order?: number,
     color: string,
     date?: string,
@@ -13,7 +15,8 @@ export type Cronog = {
     icon: IconProp,
     weekdays?: Array<Days>,
     type: typeCronog,
-    title: string
+    title: string,
+    taskCount: number;
 };
 
 export const schemaCronog = yup.object().shape({
@@ -22,7 +25,7 @@ export const schemaCronog = yup.object().shape({
     order: yup.number(),
     title: yup
         .string()
-        .required('Preencha o email')
+        .required('Preencha o titulo')
         .min(3, 'O campo Titulo deve ter pelo menos 3 caracteres')
         .max(20, 'O campo Titulo deve ter no maximo 20 caracteres'),
     type: yup

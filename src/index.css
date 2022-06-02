@@ -1,6 +1,7 @@
 :root{
-  --main-color: #B042B4 !important;
-  --main-color-dark: #341436 !important;
+  --main-color: #009199 !important;
+  --main-color-dark: #174A4D !important;
+  font-family: 'Cairo', Arial, sans-serif !important;
 }
 
 @media (min-width: 1200px) {

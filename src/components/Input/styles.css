@@ -3,13 +3,28 @@
 	width: 100%;
 	height: calc(1.5em + 0.75rem + 2px);
 	padding: 0.375rem 0.75rem;
-	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
-	color: black;
-	background-color: #fff;
+	color: var(--color-input-text);
+	background-color: transparent;
 	background-clip: padding-box;
-	border-radius: 3px;
-	border: 1px solid #ced4da;
 	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border: none;
+    border-bottom: 1px solid var(--color-input-border);
+    text-align: center;
+    font-size: 20px;
+}
+
+.default-input::-webkit-input-placeholder{
+    color: var(--color-input-text);
+    opacity: 0.6;
+}
+
+.default-input:focus{
+	border-bottom-width: 2px;
+    outline: none;
+}
+
+.color-input-length{
+	color: var(--color-input-border);
 }

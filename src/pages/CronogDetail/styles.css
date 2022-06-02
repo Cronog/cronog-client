@@ -10,3 +10,49 @@
     font-size: 25px;
     width: 100%;
 }
+
+.container-btn-opt{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-btn-opt > button{
+    border-radius: 50%;
+    height: 80px !important;
+    width: 80px !important;
+    font-size: 60px;
+    display: flex;
+    min-width: auto;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.container-more-options{
+    width: 60px;
+    transition: all ease .6s;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: hidden;
+    position: absolute;
+    bottom: 20px;
+    z-index: 0;
+}
+
+.container-more-options button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    min-height: 60px;
+    min-width: 100% !important;
+    margin-bottom: 5px;
+}

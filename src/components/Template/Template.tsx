@@ -2,6 +2,7 @@
 
 import { Keyboard } from "@capacitor/keyboard";
 import { useState } from "react";
+import BackButton from "../BackButton";
 import HamburguerMenu from "../HamburguerMenu";
 import Props from "./props";
 
@@ -20,11 +21,16 @@ const Template = (props : Props) => {
   })
 
   return (
-      <div id="container-template" className={`container-template ${props.classCssScreen}`}>
+      <div id="container-template" className={`container-template ${props.classCssScreen}`}
+      style={{
+        "--color-container": props.colorContainer || "white"
+      } as React.CSSProperties}
+      >
         <div className={`header-template ${props.classCssHeader}`}
         style={{
           "--color-header": props.colorHeader || "var(--main-color)"
         } as React.CSSProperties}>
+            {props.pathBack ? <BackButton path={props.pathBack} color="white"/> : <></>}
             {props.renderHeader ? props.renderHeader : <></>}
             {props.hideMenuHamburguer ? <></> : <HamburguerMenu color={props.colorMenuHamburguer} /> }
         </div>

@@ -7,6 +7,8 @@ export default interface Props {
 	classCssContainer?: string;
 	placeholder?: string;
 	disabled?: boolean;
+	colorText?: string;
+	colorBorder?: string;
 	maxLength?: number;
 	minLength?: number;
 	events: {

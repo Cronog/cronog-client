@@ -11,27 +11,26 @@ import lockedRoutes from '../../utils/routes';
 import './styles.css';
 import Recovery from '../Auth/Recovery';
 
-import * as authUtils from "../../utils/auth";
 import CronogDetail from '../CronogDetail';
+import TaskConfig from '../TaskConfig';
+import { Provider } from 'react-redux';
+import store from "../../redux/store";
 
 function Main() {
 
   const history = useHistory();
 
     useEffect(() => {
-      if(!authUtils.authenticatedUser(true)){
-        if(history){
-          if(lockedRoutes().find(item => item === history.location.pathname)){
-            history.push("auth/login");
-          }
+      if(history){
+        if(lockedRoutes().find(item => item === history.location.pathname)){
+          history.push("/home")
         }
-      }else{
-        history.push("/home")
       }
     }, [history])
 
   return (
     <div id="container-main">
+      <Provider store={store}>
       <Path path='/auth/login' exact>
         <Login />
       </Path>
@@ -47,9 +46,13 @@ function Main() {
       <Path path='/home/cronog-config/:id?'>
         <CronogConfig />
       </Path>
-      <Path path='/home/cronog-detail/:id/:title/:color'>
+      <Path path='/home/cronog-detail/:id'>
         <CronogDetail />
       </Path>
+      <Path path='/home/task-config/:cronogId/:order/:id?'>
+        <TaskConfig />
+      </Path>
+      </Provider>
     </div>
   );
 }

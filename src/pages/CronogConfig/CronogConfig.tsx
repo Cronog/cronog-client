@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import * as yup from 'yup';
 
 //components internal
-import BackButton from "../../components/BackButton";
-import FieldForm from "../../components/FieldForm";
 import Template from "../../components/Template";
 import DaysWeek from "../../components/DaysWeek";
 import ModalSelectionIcons from "../../components/ModalSelectionIcons";
@@ -13,6 +11,9 @@ import Button from "../../components/Button";
 import { showToast } from "../../components/Toast/Toast";
 import Loading from "../../components/Loading";
 import ModalConfirm from "../../components/ModalConfirm";
+import ModalSelectionColor from "../../components/ModalSelectionColor";
+import Select from "../../components/Select";
+import Input from "../../components/Input";
 
 //components external
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -20,8 +21,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GoDiffAdded } from "react-icons/go";
 
 //types
-import * as propsInput from "../../components/Input/props";
-import * as propsSelect from "../../components/Select/props";
 import { typeCronog } from "../../types/TypeCronog";
 import { Cronog, schemaCronog } from "../../types/Cronog";
 import { Days } from "../../types/Days";
@@ -29,6 +28,7 @@ import { Days } from "../../types/Days";
 //functions
 import * as cronogUtils from "../../utils/cronog";
 import { getCredentials } from "../../utils/auth";
+import { setNotification } from "../../utils/notification";
 
 const CronogConfig = () => {
 
@@ -49,25 +49,29 @@ const CronogConfig = () => {
   const [loadingSave, setLoadingSave] = useState<boolean>(false);
   const [loadingDelete, setLoadingDelete] = useState<boolean>(false);
   const [showModalConfirm, setShowModalConfirm] = useState<boolean>(false);
+  const [showModalColors, setShowModalColors] = useState<boolean>(false);
   //object
   const [weekDays, setWeekDays] = useState<Days[]>();
-  const [type, setType] = useState<typeCronog>();
   const [icon, setIcon] = useState<IconProp>();
   const [initialData, setInitialData] = useState<Cronog>();
+  const [type, setType] = useState<typeCronog>(0);
+  //number
+  const [notificationId, setNotificationId] = useState<number>(0);
 
   //useEffect's
   useEffect(() => {
     if(id){
       cronogUtils.getCronogById(id).then((data) => {
-        if(data.success){
+        if(data.success && data.data){
           setInitialData(data.data);
-          setTitle(data.data?.title);
-          setType(data.data?.type)
-          setWeekDays(data.data?.weekdays);
-          setColor(data.data?.color);
-          setIcon(data.data?.icon);
-          setDay(data.data?.date);
-          setHour(data.data?.time);
+          setNotificationId(data.data.notificationId);
+          setTitle(data.data.title);
+          setType(data.data.type)
+          setWeekDays(data.data.weekdays);
+          setColor(data.data.color);
+          setIcon(data.data.icon);
+          setDay(data.data.date);
+          setHour(data.data.time);
           setLoadingPage(false);
         }
       })
@@ -78,11 +82,26 @@ const CronogConfig = () => {
     }
   }, [id]);
 
+  useEffect(()=> {
+    if(type == typeCronog.diary) setWeekDays([0, 1, 2, 3, 4, 5, 6]);
+    if(type == typeCronog.weekly) setWeekDays([0]);
+    if(type == typeCronog.monthly) setWeekDays([]);
+    if(type != typeCronog.monthly) setDay("1");
+  }, [type]);
+
+  useEffect(()=> {
+    if(weekDays){
+      if(weekDays.length >= 2 && weekDays.length < 7) setType(typeCronog.custom);
+      if(weekDays.length == 7) setType(typeCronog.diary);
+    }
+  }, [weekDays]);
+
   //functions
   const saveCronog = async () => {
     const payload = {
       id: id,
       userId: getCredentials()?.uid,
+      notificationId: notificationId,
       order: 9999,
       title: title,
       type: type,
@@ -105,6 +124,7 @@ const CronogConfig = () => {
 
           if(response.success){
             showToast("success", response.message);
+            setNotification(response.data, payload);
             history.push("/home");
           }else{
             showToast("error", response.message);
@@ -123,6 +143,7 @@ const CronogConfig = () => {
 
     if(response.success){
       showToast("success", response.message);
+      
       history.push("/home");
     }else{
       showToast("error", response.message);
@@ -131,249 +152,175 @@ const CronogConfig = () => {
   }
   
   return (
+    <>
+    {loadingPage ? <Loading size={"60"} /> :
     <Template
     colorMenuHamburguer="white"
     classCssHeader="header-cronog"
     colorHeader={color}
-    renderHeader={
-      <>
-        <div className="btn-back">
-          <BackButton path="/home" color="white" />
-        </div>
-        <div className="title text-white">
-          {titlePage}
-        </div>
-      </>
-      }
+    pathBack="/home"
+    renderHeader={<>{titlePage}</>}
       classCssBody="flex flex-col"
-      renderBody={loadingPage ? <Loading size={"40"} /> :
+      renderBody={
         <>
-          <FieldForm
-          textLabel="Titulo"
-          classCss="text-3xl"
-          typeField={0}
-          propsParent={{
-            id: "cronogConfig.title",
-            name: "cronogConfig.title",
-            style: "text-3xl text-center",
-            type: "text",
-            initialValue: initialData?.title,
-            maxLength:20,
-            events:{
-              onChange: (value : string) => setTitle(value)
-            }
-          } as propsInput.default}
-          />
-          <FieldForm
-          textLabel="Tipo"
-          typeField={2}
-          classCss={"!mb-5 text-3xl"}
-          propsParent={{
-            id: "cronogConfig.type",
-            name: "cronogConfig.type",
-            initialValue: initialData?.type,
-            style: "text-3xl text-center",
-            options: [
-              {
-                text: "Escolha uma opção",
-                value: ""
-              },
-              {
-                text: "Diário",
-                value: "0"
-              },
-              {
-                text: "Semanal",
-                value: "1"
-              },
-              {
-                text: "Mensal",
-                value: "2"
-              },
-              {
-                text: "Personalizado",
-                value: "3"
-              }],
-            events:{
-              onChange: (value : number) => setType(value)
-            }
-          } as unknown as propsSelect.default}
-          />
-          {type !== 2 ? (
-             <>
-              <div className="flex-1 mx-1 my-4 text-3xl">
-                <label>Dias da Semana</label>
-                <DaysWeek
-                color={color}
-                size={45}
-                initialValue={initialData?.weekdays}
-                onChange={(value) => setWeekDays(value)}
-                />
+          <div className="mb-12">
+            <Input
+              id="cronogConfig.title"
+              placeholder="Titulo"
+              name="cronogConfig.title"
+              classCss="text-center"
+              colorBorder={color}
+              type="text"
+              initialValue={initialData?.title}
+              maxLength={20}
+              events={{
+                onChange: value => setTitle(value)
+              }}
+            />
+          </div>
+          <div className="mb-12">
+            <Select
+              id="cronogConfig.type"
+              name="cronogConfig.type"
+              initialValue={type || initialData?.type || ""}
+              classCss="text-center"
+              colorBorder={color}
+              options={[
+                {
+                  text: "Escolha uma opção",
+                  value: typeCronog.initial
+                },
+                {
+                  text: "Diário",
+                  value: typeCronog.diary
+                },
+                {
+                  text: "Semanal",
+                  value: typeCronog.weekly
+                },
+                {
+                  text: "Mensal",
+                  value: typeCronog.monthly
+                },
+                {
+                  text: "Personalizado",
+                  value: typeCronog.custom
+                }]}
+              events={{
+                onChange: value => setType(value as typeCronog)
+              }}
+            />
+          </div>
+          <div className="flex-1 mx-1 my-4 mb-12">
+            <DaysWeek
+              disabled={type == typeCronog.monthly ? true : false}
+              color={color}
+              size={45}
+              initialValue={weekDays || initialData?.weekdays}
+              onChange={value => setWeekDays(value)}
+            />
+          </div>
+          <div className="flex mb-12">
+            <Select
+              id="cronogConfig.day"
+              name="cronogConfig.day"
+              initialValue={day || initialData?.date}
+              classCss="text-center justify-center text-center"
+              colorBorder={color}
+              disabled={type != typeCronog.monthly ? true : false}
+              options={Array.from(Array(31).keys()).map((item) => {
+                return {
+                  text: (item + 1).toString(),
+                  value: (item + 1).toString()
+                }
+              })}
+              events={{
+                onChange: value => setDay(value as string)
+              }}
+            />
+            <Input
+              id="cronogConfig.hour"
+              placeholder="Horário"
+              name="cronogConfig.hour"
+              classCss="text-center justify-center flex"
+              colorBorder={color}
+              type="time"
+              initialValue={initialData?.time}
+              events={{
+                onChange: value => setHour(value)
+              }}
+            />
+          </div>
+          <div className="flex">
+            <div className="flex-1">
+              <div 
+                className="default-input rounded-3xl"
+                onClick={() => setShowModalColors(true)}
+                style={{
+                  backgroundColor: color
+                }}>
               </div>
-              <div className="flex-1 flex">
-                <FieldForm
-                textLabel="Horário"
-                classCss="text-3xl"
-                typeField={0}
-                propsParent={{
-                  id: "cronogConfig.hour",
-                  name: "cronogConfig.hour",
-                  style: "text-3xl text-center justify-center flex",
-                  type: "time",
-                  initialValue: initialData?.time,
-                  events:{
-                    onChange: (value : string) => setHour(value)
-                  }
-                } as propsInput.default}
-                />
-                <FieldForm
-                textLabel="Cor"
-                classCss="text-3xl"
-                typeField={0}
-                propsParent={{
-                  id: "cronogConfig.color",
-                  name: "cronogConfig.color",
-                  style: "text-3xl",
-                  initialValue: color,
-                  type: "color",
-                  events:{
-                    onChange: (value : string) => setColor(value)
-                  }
-                } as propsInput.default}
-                />
-                <div className="flex-1 flex flex-col">
-                  <label className="text-3xl">Icone</label>
-                  <div className="items-center flex justify-center">
-                    {icon ? 
-                      <FontAwesomeIcon 
-                      onClick={() => setShowModalIcons(prevState => !prevState)}
-                      style={{
-                        fontSize: "3rem",
-                        color: color
-                      }} 
-                      icon={icon} /> 
-                      : 
-                      <GoDiffAdded 
-                      onClick={() => setShowModalIcons(prevState => !prevState)}
-                      style={{
-                        fontSize: "3rem",
-                        color: color
-                      }} />
-                    }
-                  </div>
-                </div>       
+            </div>
+            <div className="flex-1 flex flex-col">
+              <div className="items-center flex justify-center">
+                {icon ? 
+                  <FontAwesomeIcon 
+                  onClick={() => setShowModalIcons(true)}
+                  style={{
+                    fontSize: "2.5rem",
+                    color: color
+                  }} 
+                  icon={icon} /> 
+                  : 
+                  <GoDiffAdded 
+                  onClick={() => setShowModalIcons(true)}
+                  style={{
+                    fontSize: "2.5rem",
+                    color: color
+                  }} />
+                }
               </div>
-            </>
-          ) : 
-          (
-            <>
-              <div className="flex mb-4">
-                <FieldForm
-                textLabel="Dia"
-                classCss="text-3xl"
-                typeField={2}
-                propsParent={{
-                  id: "cronogConfig.day",
-                  name: "cronogConfig.day",
-                  initialValue: initialData?.date,
-                  style: "text-3xl text-center justify-center text-center",
-                  options: Array.from(Array(31).keys()).map((item) => {
-                    return {
-                      text: (item + 1).toString(),
-                      value: (item + 1).toString()
-                    };
-                  }),
-                  events: {
-                    onChange: (value : string) => setDay(value)
-                  }
-                } as unknown as propsSelect.default}
-                />
-                <FieldForm
-                textLabel="Horário"
-                classCss="text-3xl"
-                typeField={0}
-                propsParent={{
-                  id: "cronogConfig.hour",
-                  name: "cronogConfig.hour",
-                  type: "time",
-                  style:"text-3xl text-center justify-center flex",
-                  initialValue: initialData?.time,
-                  events:{
-                    onChange: (value : string) => setHour(value)
-                  }
-                } as propsInput.default}
-                />
-              </div>
-              <div className="flex">
-                <FieldForm
-                  textLabel="Cor"
-                  classCss="text-3xl"
-                  typeField={0}
-                  propsParent={{
-                    id: "cronogConfig.color",
-                    name: "cronogConfig.color",
-                    initialValue: color,
-                    type: "color",
-                    style:"text-3xl",
-                    events:{
-                      onChange: (value : string) => setColor(value)
-                    }
-                  } as propsInput.default}
-                  />
-                  <div className="flex-1 flex flex-col">
-                    <label className="text-3xl">Icone</label>
-                    <div className="items-center flex justify-center">
-                      {icon ? 
-                        <FontAwesomeIcon 
-                        onClick={() => setShowModalIcons(prevState => !prevState)}
-                        style={{
-                          fontSize: "3rem",
-                          color: color
-                        }} 
-                        icon={icon} /> 
-                        : 
-                        <GoDiffAdded 
-                        onClick={() => setShowModalIcons(prevState => !prevState)}
-                        style={{
-                          fontSize: "3rem",
-                          color: color
-                        }} />
-                      }
-                    </div>
-                  </div>
-              </div>
-            </>
-          )}
+            </div>
+          </div>
           <div className="flex flex-col h-full justify-end">
             {id && (
               <Button 
-              classCss="btn-main-color h-10 !bg-white !text-fuchsia-800"
+              classCss="h-10"
+              textColor={color}
+              borderColor={color}
               action={() => setShowModalConfirm(true)}
               >
-                {loadingDelete ? <Loading size="20" /> : "EXCLUIR"}
+                {loadingDelete ? <Loading size="40" /> : "EXCLUIR"}
               </Button>
             )}
             <Button 
-            classCss="btn-main-color h-10 mt-2"
+            classCss="h-10 mt-2"
+            backgroundColor={color}
             action={saveCronog}
             >
-              {loadingSave ? <Loading color="white" size="20" /> : "SALVAR"}
+              {loadingSave ? <Loading color="white" size="40" /> : "SALVAR"}
             </Button>
           </div>
           <ModalSelectionIcons 
           showModal={showModalIcons}
-          closeModal={() => setShowModalIcons(prevState => !prevState)}
+          closeModal={() => setShowModalIcons(false)}
           onSelected={(value) => setIcon(value)}
+          />
+          <ModalSelectionColor 
+          showModal={showModalColors}
+          closeModal={() => setShowModalColors(false)}
+          onSelected={(value) => setColor(value)}
           />
           <ModalConfirm
           showModal={showModalConfirm}
-          closeModal={() => setShowModalConfirm(prevState => !prevState)}
+          closeModal={() => setShowModalConfirm(false)}
           text="Confirma a exclusão? Todas as tarefas serão perdidas"
           actionConfirm={() => deleteCronog()}
           />
         </>
       }
       />
+    }</>
   )
 }
 

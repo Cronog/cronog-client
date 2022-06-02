@@ -1,10 +1,10 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 
 import Props from './props';
 
 import './styles.css';
 
-const Loading: FunctionComponent<Props> = (props): JSX.Element => {
+const Loading = (props : Props) => {
 	return (
 		<div className="container-loading">
 			<div

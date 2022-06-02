@@ -10,6 +10,7 @@ const Menu = () => {
     const element = document.getElementById("container-menu");
     if(element){
       element.style.width = "0";
+      element.style.right = "-300px";
       element.style.padding = "0"
     }
   }
@@ -22,10 +23,10 @@ const Menu = () => {
                 onClick={closeMenu}
                 />
           </div>
-            <a href="/home" onClick={closeMenu} >
+            <a className="flex" href="/home" onClick={closeMenu} >
                 Home
             </a>
-            <a href="/auth/login" onClick={() => authUtils.singOut(closeMenu())}>
+            <a className="flex" href="/auth/login" onClick={() => authUtils.singOut(closeMenu())}>
                 Sair
             </a>
         </div>

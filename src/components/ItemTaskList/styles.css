@@ -1,0 +1,13 @@
+.container-item-task-list{
+    height: 80px;
+    width: 100%;
+    padding: 5px;
+    padding-right: 25px;
+    margin-bottom: 15px;
+}
+
+.img-container-item-task-list{
+    height: 100%;
+    width: 200px;
+    object-fit: cover;
+}

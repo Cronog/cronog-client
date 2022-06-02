@@ -1,0 +1,15 @@
+.ReactModal__Content{
+    padding: 0 !important;
+}
+
+.item-color{
+    height: 150px;
+    width: 140px;
+    padding: 1px;
+    margin-bottom: 10px;
+    border: 1px solid black;
+}
+
+.item-color:nth-child(2n+1){
+    margin-right: auto;
+}

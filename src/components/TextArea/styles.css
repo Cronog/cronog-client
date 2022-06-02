@@ -5,8 +5,20 @@
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
-	color: var(--cor-preto);
-	background-color: var(--cor-branco);
-	border: 1px solid #ced4da;
+	color: var(--color-textarea-text);
+	background-color: var(--color-textarea-background);
 	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	border: none;
+    border-bottom: 1px solid var(--color-textarea-border);
+    text-align: center;
+    font-size: 20px;
+	border-radius: 15px;
+}
+
+.default-textarea:focus{
+	border-bottom-width: 2px;
+}
+
+.color-textarea-length{
+	color: var(--color-textarea-border);
 }

@@ -1,4 +1,3 @@
-import {FunctionComponent} from 'react';
 import ReactDOM from 'react-dom';
 
 import {toast, ToastContainer} from 'react-toastify';
@@ -44,7 +43,7 @@ export const showToast = (type: string, text: string | undefined): void => {
 			break;
 	}
 };
-const Toast: FunctionComponent = (): JSX.Element => {
+const Toast = () => {
 	return (
 		<>
 			{ReactDOM.createPortal(

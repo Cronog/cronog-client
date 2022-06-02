@@ -28,17 +28,14 @@ export const register = async (login : Login) : Promise<Response> => {
     return response;
 }
 
-export const authenticatedUser = (requireAuthentication : boolean) : boolean => {
-    
+export const authenticatedUser = async (requireAuthentication : boolean) : Promise<boolean> => {
     if(requireAuthentication){
-        
-       const token = localStorage.getItem("user");
-
-       if(token){
-           return true
-       }else{
-           return false
-       }
+        if(requireAuthentication){
+            return chamarBackEnd("GET", "/auth/authenticatedUser")
+            .then(data => data.success);
+         }else{
+             return true;
+         }
     }else{
         return true
     }

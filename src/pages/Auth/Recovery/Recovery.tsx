@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { IoIosArrowBack } from "react-icons/io";
 import { useHistory, useParams } from "react-router-dom";
 import Template from "../../../components/Template";
 import { showToast } from "../../../components/Toast/Toast";
@@ -12,7 +11,7 @@ import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import Loading from "../../../components/Loading";
 
-const logo = require("../../../assets/logo.JPG");
+const logo = require("../../../assets/logo.png");
 
 const Recovery = () => {
 
@@ -38,11 +37,12 @@ const Recovery = () => {
     classCssHeader="container-auth color-auth"
     hideMenuHamburguer={true}
     colorBody="var(--main-color)"
-    renderHeader={<IoIosArrowBack onClick={() => history.push("/auth/login")} size={"50"}/>}
+    pathBack="/auth/login"
     classCssBody="flex flex-col items-center"
+    colorContainer="var(--main-color)"
     renderBody={
       <>
-      <img src={logo} alt=""/>
+      <img src={logo} className="logo" alt=""/>
       <div className="w-full h-full flex flex-col px-10 items-center overflow-y-auto">
         <Input
         id="recovery.email"
@@ -58,9 +58,10 @@ const Recovery = () => {
         <Button
         classCss="btn-auth"
         type="button"
+        textColor="var(--main-color)"
         action={recovery}
         >
-          {isLoading ? <Loading size="30" /> : "Recuperar"}
+          {isLoading ? <Loading size="40" /> : "Recuperar"}
         </Button>
       </div>
       </>

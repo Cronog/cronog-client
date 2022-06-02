@@ -8,10 +8,6 @@
     flex-direction: column;
 }
 
-img{
-    width: 50%;
-}
-
 .input-auth{
     color: white;
     border: none;
@@ -29,6 +25,11 @@ img{
     outline: none;
 }
 
+.logo {
+    margin: -40px 0;
+    height: 50%;
+}
+
 .btn-auth {
     background-color: white !important;
     color: var(--main-color);
@@ -43,4 +44,4 @@ img{
     margin-top: 30px;
     color: white;
     font-size: 20px;
-} 
+}

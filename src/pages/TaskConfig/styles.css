@@ -1,0 +1,13 @@
+.img-task{
+    width: 80%;
+    height: 300px;
+    border: 4px dashed var(--color-task);
+    object-fit: cover;
+}
+
+.image-pick{
+    width: 50%;
+    height: 50%;
+    background-color: var(--color-task);
+    border-radius: 10px;
+}

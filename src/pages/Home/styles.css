@@ -3,11 +3,12 @@
 }
 
 .list-cronog{
-    overflow-x: auto;
+    overflow-y: auto;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
+    max-height: 91%;
 }
 
 .container-btn-add-cronog{

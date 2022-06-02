@@ -8,6 +8,8 @@ export default interface Props {
     renderBody: ReactElement;
     colorMenuHamburguer?: string;
     hideMenuHamburguer?: boolean;
+    colorContainer?: string;
     colorHeader?: string;
     colorBody?: string;
+    pathBack? : string;
 }

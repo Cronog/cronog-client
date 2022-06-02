@@ -1,6 +1,6 @@
 #container-menu{
     top: 0;
-    right: 0;
+    right: -300px;
     width: 0;
     height: 100%;
     display: flex !important;
@@ -8,6 +8,8 @@
     position: fixed;
     flex-direction: column;
     transition: all ease .6s;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
 }
 
 #container-menu * {

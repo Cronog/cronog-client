@@ -3,5 +3,6 @@ export default interface Props {
     size: number,
     initialValue?: number[],
     disabled?: boolean,
+    readOnly?: boolean,
     onChange?: (selectedWeekDays: number[]) => void
 }

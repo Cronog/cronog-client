@@ -17,7 +17,7 @@ const FieldForm :ForwardRefRenderFunction<
   HTMLTextAreaElement, Props> = (
 	props,
 	ref
-): JSX.Element => {
+) => {
   return (
     <div className={`flex-1 mx-1 mb-2 ${props.classCss}`}>
         <label>

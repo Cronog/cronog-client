@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
 
-export default combineReducers({
+import CronogReducer from "./cronog";
 
+export default combineReducers({
+    CronogReducer
 });

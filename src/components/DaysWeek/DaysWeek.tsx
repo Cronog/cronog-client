@@ -4,7 +4,7 @@ import Props from './props';
 const DaysWeek = (props : Props) => {
 
     const [selectedWeekDays, setSelectedWeekDays] = useState<number[]>([]);
-    const daysWeek = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
+    const daysWeek = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
     useEffect(() => {
         if(props.initialValue) setSelectedWeekDays(props.initialValue);
@@ -24,7 +24,11 @@ const DaysWeek = (props : Props) => {
     }
     
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between"
+    style={{
+        opacity: props.disabled ? 0.6 : 1
+    }}
+    >
         {daysWeek.map((item, index) => {
             return (
                 <div 
@@ -36,7 +40,7 @@ const DaysWeek = (props : Props) => {
                     width: `${props.size}px`,
                     borderColor: props.color,
                 }}
-                onClick={() => props.disabled ?? onChange(index)}>
+                onClick={() => props.disabled || props.readOnly || onChange(index)}>
                     {item}
                 </div>
             )

@@ -10,7 +10,8 @@ function HamburguerMenu(props : Props) {
     const showMenu = () => {
         const element = document.getElementById("container-menu");
         if(element){
-             element.style.width = "70%"
+             element.style.width = "calc(70%)"
+             element.style.right = "0"
              element.style.padding = "10px"
         }
     }

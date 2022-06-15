@@ -1,5 +1,6 @@
 .container-img-pick{
     width: 80%;
+    min-width: 350px;
     height: 300px;
     border: 4px dashed var(--color-task);
     object-fit: cover;

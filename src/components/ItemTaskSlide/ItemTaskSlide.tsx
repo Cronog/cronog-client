@@ -11,7 +11,7 @@ const ItemTaskSlide = (props: Props) => {
 
   return (
     <div
-    className="flex flex-col items-center h-full mb-5 background-color p-2 rounded-2xl"
+    className="flex flex-col items-center mb-5 background-color p-2 rounded-2xl"
     onClick={() => history.push(`/home/task-config/${props.task.cronogId}/${props.task.order}/${props.task.id}`)}
     style={{
       "--color-task" : props.color
@@ -19,7 +19,7 @@ const ItemTaskSlide = (props: Props) => {
     >
       <ImagePick
         color={props.color}
-        initialValue={props.task.img}
+        initialValue={props.task.imgs}
         cssClass="w-full"
         disabled
         events={{}}

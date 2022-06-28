@@ -27,7 +27,7 @@ const TaskConfig = (props : Props) => {
 
 
     const [titlePage, setTitlePage] = useState<string>();
-    const [image, setImage] = useState<string | undefined>();
+    const [images, setImages] = useState<string[] | undefined>();
     const [title, setTitle] = useState<string>();
     const [description, setDescription] = useState<string>();
     const [loadingPage, setLoadingPage] = useState<boolean>(true);
@@ -46,7 +46,7 @@ const TaskConfig = (props : Props) => {
         taskUtils.getTaskById(id).then(data => {
           if(data.success){
             setTitle(data.data?.title)
-            setImage(data.data?.img)
+            setImages(data.data?.imgs)
             setDescription(data.data?.description)
             setCreateAt(data.data?.createAt || new Date())
           }
@@ -65,7 +65,7 @@ const TaskConfig = (props : Props) => {
       id: id,
       cronogId: cronogId,
       title: title,
-      img: image,
+      imgs: images,
       createAt: createAt,
       order: parseInt(order),
       description: description,
@@ -75,11 +75,11 @@ const TaskConfig = (props : Props) => {
       await schemaTask.validate(payload)
         .then(async () => {
           let response;
-          payload.img = "";
+          payload.imgs = [];
           if(id)
-            response = await taskUtils.updateTask(payload, image!, id, cronogId);
+            response = await taskUtils.updateTask(payload, images!, id, cronogId);
           else
-            response = await taskUtils.saveTask(payload, image!);
+            response = await taskUtils.saveTask(payload, images!);
 
           if(response.success){
             showToast("success", response.message);
@@ -143,9 +143,9 @@ const TaskConfig = (props : Props) => {
             <div className="w-full flex justify-center mb-5">
               <ImagePick 
                 color={props.currentCronog.color}
-                initialValue={image}
+                initialValue={images}
                 events={{
-                  onChange: value => setImage(value)
+                  onChange: value => setImages(value)
                 }}
               />
             </div>
@@ -168,6 +168,7 @@ const TaskConfig = (props : Props) => {
                 <Button
                 textColor={props.currentCronog.color}
                 borderColor={props.currentCronog.color}
+                backgroundColor="transparent"
                 classCss="h-10"
                 action={() => setShowModalConfirm(true)}
                 >

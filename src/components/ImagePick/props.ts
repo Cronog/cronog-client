@@ -1,9 +1,10 @@
 export default interface Props {
-    initialValue?: string;
+    initialValue?: string[];
     color: string;
-    cssClass?: string
-    disabled?: boolean
+    cssClass?: string;
+    disabled?: boolean;
+    size?: number;
     events: {
-        onChange?: (value: string) => void
+        onChange?: (value: string[]) => void
     }
 }

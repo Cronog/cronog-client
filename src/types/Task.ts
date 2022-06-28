@@ -4,7 +4,7 @@ export type Task = {
     id?: string,
     cronogId: string,
     title: string,
-    img: string,
+    imgs: string[],
     order: number,
     description?: string,
     createAt: Date
@@ -21,9 +21,9 @@ export const schemaTask = yup.object().shape({
         .required('Preencha o titulo')
         .min(3, 'O titulo deve ter pelo menos 3 caracteres')
         .max(20, 'O titulo deve ter no maximo 20 caracteres'),
-    img: yup
-        .string()
-        .required('Adicione uma foto'),
+    imgs: yup
+        .array()
+        .min(1, 'Adicione uma foto'),
     order: yup
         .number(),
     description: yup

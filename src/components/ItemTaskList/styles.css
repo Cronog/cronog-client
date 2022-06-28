@@ -6,8 +6,9 @@
     margin-bottom: 15px;
 }
 
-.img-container-item-task-list{
+.item-task-list-image{
     height: 100%;
-    width: 200px;
+    width: 100px;
     object-fit: cover;
 }
+

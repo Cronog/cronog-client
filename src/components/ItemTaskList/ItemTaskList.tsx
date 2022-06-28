@@ -16,13 +16,16 @@ const ItemTaskList = (props: Props) => {
         backgroundColor: props.color
     }}
     >
-        <ImagePick
-          initialValue={props.task.img}
-          disabled
-          cssClass="img-container-item-task-list"
-          color={props.color}
-          events={{}}
-        />
+      <div className='item-task-list-image'>
+          <ImagePick
+            initialValue={props.task.imgs}
+            disabled
+            cssClass="img-container-item-task-list"
+            color={props.color}
+            size={70}
+            events={{}}
+          />
+      </div>
         <div className='ml-3 w-full h-full flex flex-col flex-initial justify-between'>
           <div className='text-white text-4xl font-bold wrap-text-1'>{props.task.title}</div>
           <div className='text-white'>{dayjs(props.task.createAt).format('DD/MM/YYYY HH:mm')}</div>

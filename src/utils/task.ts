@@ -6,31 +6,31 @@ import { arrayBufferToDataUri, dataURItoBlob } from "./general";
 
 export const getTaskById = async (id: string) : Promise<Response<Task>> => {
     const response = await getBackEnd<Task>("GET", `/task/${getCredentials()?.uid}/${id}`)
-    response.data!.img = arrayBufferToDataUri(response.data?.img)
+    response.data!.imgs = response.data!.imgs.map(image => arrayBufferToDataUri(image))
     return response;
 }
 
 export const getTaskByCronogId = async (cronogId: string) : Promise<Response<Task[]>> => {
     const response = await getBackEnd<Task[]>("GET", `/task/${cronogId}`)
-    response.data!.forEach(item => item.img = arrayBufferToDataUri(item.img))
+    response.data!.forEach(item => item.imgs = item.imgs.map(image => arrayBufferToDataUri(image)))
     return response;
 }
 
-export const saveTask = async (task : Task, image : string) : Promise<Response<any>> => {
+export const saveTask = async (task: Task, images: string[]) : Promise<Response<any>> => {
 
     var fd = new FormData()
     fd.append('data', JSON.stringify(task))
-    fd.append('img', dataURItoBlob(image)!)
+    images.forEach(image => fd.append('img', dataURItoBlob(image)!))
 
     const response = await getBackEnd("POST", "/task", fd, 1);
     return response;
 }
 
-export const updateTask = async (task : Task, image: string, id : string, cronogId: string) : Promise<Response<any>> => {
+export const updateTask = async (task : Task, images: string[], id : string, cronogId: string) : Promise<Response<any>> => {
 
     var fd = new FormData()
     fd.append('data', JSON.stringify(task))
-    fd.append('img', dataURItoBlob(image)!)
+    images.forEach(image => fd.append('img', dataURItoBlob(image)!))
 
     const response = await getBackEnd("PUT", `/task/${cronogId}/${id}`, fd, 1);
     return response;

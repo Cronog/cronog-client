@@ -1,7 +1,4 @@
-import { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { showToast } from "../Toast/Toast";
 import Props from "./props";
 
 import "./styles.css";

@@ -20,7 +20,7 @@ const ItemTaskList = (props: Props) => {
           initialValue={props.task.img}
           disabled
           cssClass="img-container-item-task-list"
-          colorBorder={props.color}
+          color={props.color}
           events={{}}
         />
         <div className='ml-3 w-full h-full flex flex-col flex-initial justify-between'>

@@ -31,27 +31,27 @@ function Main() {
   return (
     <div id="container-main">
       <Provider store={store}>
-      <Path path='/auth/login' exact>
-        <Login />
-      </Path>
-      <Path path='/auth/register/:email?' exact>
-        <Register />
-      </Path>
-      <Path path='/auth/recovery/:email?'>
-        <Recovery />
-      </Path>
-      <Path path='/home' exact>
-        <Home />
-      </Path>
-      <Path path='/home/cronog-config/:id?'>
-        <CronogConfig />
-      </Path>
-      <Path path='/home/cronog-detail/:id'>
-        <CronogDetail />
-      </Path>
-      <Path path='/home/task-config/:cronogId/:order/:id?'>
-        <TaskConfig />
-      </Path>
+        <Path path='/auth/login' exact>
+          <Login />
+        </Path>
+        <Path path='/auth/register/:email?' exact>
+          <Register />
+        </Path>
+        <Path path='/auth/recovery/:email?'>
+          <Recovery />
+        </Path>
+        <Path path='/home' exact>
+          <Home />
+        </Path>
+        <Path path='/home/cronog-config/:id?'>
+          <CronogConfig />
+        </Path>
+        <Path path='/home/cronog-detail/:id'>
+          <CronogDetail />
+        </Path>
+        <Path path='/home/task-config/:cronogId/:order/:id?'>
+          <TaskConfig />
+        </Path>
       </Provider>
     </div>
   );

@@ -5,34 +5,34 @@ import { getCredentials, singOut } from "./auth";
 
 const linkBackEnd = process.env.REACT_APP_API_URL_DEV || process.env.REACT_APP_API_URL;
 
-export async function chamarBackEnd<T = {}>(metodo : string, caminho : string, corpo? : any, contentType: RequestType = 0) : Promise<Response<T>> {
+export async function getBackEnd<T = {}>(method : string, path : string, body? : any, contentType: RequestType = 0) : Promise<Response<T>> {
 
-    let cabecalho;
+    let headers;
 
     if(contentType == 1){
-        cabecalho = {
+        headers = {
             "tokenAuth" : getCredentials()?.stsTokenManager.accessToken || ""
             }
         }else{
-        cabecalho = {
+        headers = {
             "Content-Type": "application/json",
             "tokenAuth" : getCredentials()?.stsTokenManager.accessToken || ""
             }
         }
 
     // try {
-        if(corpo){
-            const response = await fetch(linkBackEnd + caminho, {
-                method: metodo,
-                headers: cabecalho,
-                body: contentType == 1 ? corpo : JSON.stringify(corpo),
+        if(body){
+            const response = await fetch(linkBackEnd + path, {
+                method: method,
+                headers: headers,
+                body: contentType == 1 ? body : JSON.stringify(body),
                 })
             return resolveResponse(await response.json())
     
         }else{
-            const response = await fetch(linkBackEnd + caminho, {
-                method: metodo,
-                headers: cabecalho,
+            const response = await fetch(linkBackEnd + path, {
+                method: method,
+                headers: headers,
                 })
             return resolveResponse(await response.json())
             }

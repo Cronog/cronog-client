@@ -7,9 +7,9 @@ import Props from './props';
 import store from '../../redux/store';
 import { authenticatedUser } from '../../utils/auth';
 
-const Rota: FunctionComponent<Props> = (props): JSX.Element => {
+const Path: FunctionComponent<Props> = (props): JSX.Element => {
 
-	const RotaPrivada = ({...rest}) => {
+	const PrivatePath = ({...rest}) => {
 		return <Route {...rest} render={async props =>  {
 			const logged = await authenticatedUser(rest.exigeAutenticacao);
 	
@@ -25,9 +25,9 @@ const Rota: FunctionComponent<Props> = (props): JSX.Element => {
 
 	return (
 		<Switch>
-			<RotaPrivada route={props.path} {...props} />
+			<PrivatePath route={props.path} {...props} />
 		</Switch>
 	);
 };
 
-export default Rota;
+export default Path;

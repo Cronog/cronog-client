@@ -18,7 +18,7 @@ const ItemTaskSlide = (props: Props) => {
     } as React.CSSProperties}
     >
       <ImagePick
-        colorBorder={props.color}
+        color={props.color}
         initialValue={props.task.img}
         cssClass="w-full"
         disabled

@@ -1,11 +1,11 @@
-import { chamarBackEnd } from "./backend";
+import { getBackEnd } from "./backend";
 
 import Login from "../types/Login";
 import Response from "../types/Response";
 import { Credentials } from "../types/Credentials";
 
 export const singIn = async (login : Login) : Promise<Response> => {
-    const response = await chamarBackEnd("POST", "/auth/singin", login)
+    const response = await getBackEnd("POST", "/auth/singin", login)
 
     if(response.success)
         localStorage.setItem("user", JSON.stringify(response.data))
@@ -19,19 +19,19 @@ export const singOut = async (callback?: void) => {
 }
 
 export const recovery = async (email : string) : Promise<Response> => {
-    const response = await chamarBackEnd("GET", `/auth/recovery/${email}`)
+    const response = await getBackEnd("GET", `/auth/recovery/${email}`)
     return response;
 }
 
 export const register = async (login : Login) : Promise<Response> => {
-    const response = await chamarBackEnd("POST", "/auth/register", login)
+    const response = await getBackEnd("POST", "/auth/register", login)
     return response;
 }
 
 export const authenticatedUser = async (requireAuthentication : boolean) : Promise<boolean> => {
     if(requireAuthentication){
         if(requireAuthentication){
-            return chamarBackEnd("GET", "/auth/authenticatedUser")
+            return getBackEnd("GET", "/auth/authenticatedUser")
             .then(data => data.success);
          }else{
              return true;

@@ -8,8 +8,8 @@ const Button = (props : Props) => {
 			type={props.type ?? 'button'}
 			className={`default-btn ${props.classCss}`}
 			style={{
-				backgroundColor: props.backgroundColor,
-				borderColor: props.borderColor || props.backgroundColor,
+				backgroundColor: props.backgroundColor || "var(--main-color)",
+				borderColor: props.borderColor || props.backgroundColor || "var(--main-color)",
 				color: props.textColor || "white"
 			}}
 			onClick={props.action}>

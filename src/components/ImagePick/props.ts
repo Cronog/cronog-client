@@ -1,6 +1,6 @@
 export default interface Props {
     initialValue?: string;
-    colorBorder: string;
+    color: string;
     cssClass?: string
     disabled?: boolean
     events: {

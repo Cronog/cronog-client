@@ -142,7 +142,7 @@ const TaskConfig = (props : Props) => {
             </div>
             <div className="w-full flex justify-center mb-5">
               <ImagePick 
-                colorBorder={props.currentCronog.color}
+                color={props.currentCronog.color}
                 initialValue={image}
                 events={{
                   onChange: value => setImage(value)

@@ -5,12 +5,15 @@ import Props from "./props"
 import "./styles.css";
 import React, { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
+import ModalImagePreview from "../ModalImagePreview";
 
 function ImagePick(props: Props) {
   
   const imageLimit = 3;
 
   const [images, setImages] = useState<string[]>([]);
+  const [imageShow, setImageShow] = useState<string>();
+  const [showModalImagePreview, setShowModalImagePreview] = useState<boolean>(false);
   
   const { onChange } = props.events;
 
@@ -29,8 +32,11 @@ function ImagePick(props: Props) {
         left: container.scrollWidth
       })
     }
-    
   }, [images])
+
+  useEffect(() => {
+    setShowModalImagePreview(imageShow ? true : false);
+  }, [imageShow])
 
   const takePicture = async () => {
       const image = await Camera.getPhoto({
@@ -43,6 +49,10 @@ function ImagePick(props: Props) {
 
   const removeImage = (index: number) => {
     setImages(images.map((item, indexImage) => indexImage != index ? item : "").filter(item => item !=  ""))
+  }
+
+  const showImage = (image: string) => {
+    setImageShow(image);
   }
 
   return (
@@ -63,6 +73,7 @@ function ImagePick(props: Props) {
           <img
           className={`w-full h-full object-cover ${props.cssClass}`}
           src={image}
+          onClick={() => showImage(image)}
           alt="" /> 
         </div>
         ))
@@ -81,8 +92,17 @@ function ImagePick(props: Props) {
           </div>
       </div>
       )}
+
+      <ModalImagePreview 
+      color={props.color}
+      image={imageShow!}
+      showModal={showModalImagePreview}
+      closeModal={() => setImageShow(undefined)}
+      />
+
     </div>
   )
 }
+
 
 export default ImagePick;

@@ -16,7 +16,6 @@ const ModalSelectionColor = (props : Props) => {
     }
 
     useEffect(() => {
-
         getColors().then(data => data.success ? setColors(data.data) : [])
     }, [])
 

@@ -288,6 +288,7 @@ const CronogConfig = () => {
               classCss="h-10"
               textColor={color}
               borderColor={color}
+              backgroundColor="transparent"
               action={() => setShowModalConfirm(true)}
               >
                 {loadingDelete ? <Loading size="40" /> : "EXCLUIR"}

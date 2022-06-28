@@ -6,8 +6,6 @@ const config: CapacitorConfig = {
   webDir: 'build',
   bundledWebRuntime: false,
   server: {
-    // url: "http://192.168.0.174:3000"
-    // url: "http://172.29.128.1:3000",
     url: "http://192.168.0.174:3000"
   },
   plugins: {

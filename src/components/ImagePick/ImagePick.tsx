@@ -9,7 +9,7 @@ import ModalImagePreview from "../ModalImagePreview";
 
 function ImagePick(props: Props) {
   
-  const imageLimit = 3;
+  const imageLimit = 2;
 
   const [images, setImages] = useState<string[]>([]);
   const [imageShow, setImageShow] = useState<string>();

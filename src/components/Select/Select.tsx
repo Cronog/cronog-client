@@ -17,8 +17,6 @@ const Select: ForwardRefRenderFunction<HTMLSelectElement, Props> = (
 	function handleFocus(value: string): void {
 		if (onFocus) onFocus(value);
 	}
-
-	console.log(props.initialValue)
 	
 	return (
 		<select

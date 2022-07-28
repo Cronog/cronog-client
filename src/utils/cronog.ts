@@ -10,7 +10,6 @@ export const getCronogById = async (id: string) : Promise<Response<Cronog>> => {
 
 export const getCronogByUserId = async () : Promise<Response<Cronog[]>> => {
     const response = await getBackEnd<Cronog[]>("GET", `/cronog/${getCredentials()?.uid}`)
-    console.log(response);
     return response;
 }
 

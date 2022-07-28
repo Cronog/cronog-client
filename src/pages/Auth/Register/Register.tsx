@@ -40,7 +40,7 @@ const Register = () => {
         if(response.success)
             history.push("/auth/login");
         else{
-            showToast("success", response.message);
+            showToast("error", response.message);
             setIsLoading(false);
         }
     }

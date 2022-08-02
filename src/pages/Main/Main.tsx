@@ -31,6 +31,11 @@ function Main() {
   return (
     <div id="container-main">
       <Provider store={store}>
+        <Path path='/'>
+            <div className='opacity-60 w-full text-center bg-rose-900 text-white'>
+              {process.env.REACT_APP_API_ENVIRONMENT && "DEV"}
+            </div>
+        </Path>
         <Path path='/auth/login' exact>
           <Login />
         </Path>

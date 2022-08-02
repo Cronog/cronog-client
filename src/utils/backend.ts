@@ -3,7 +3,7 @@ import { RequestType } from "../types/RequestType";
 import Response from "../types/Response";
 import { getCredentials, singOut } from "./auth";
 
-const linkBackEnd = process.env.REACT_APP_API_URL_DEV || process.env.REACT_APP_API_URL;
+const linkBackEnd = process.env.REACT_APP_API_ENVIRONMENT ? process.env.REACT_APP_API_URL_DEV : process.env.REACT_APP_API_URL;
 
 export async function getBackEnd<T = {}>(method : string, path : string, body? : any, contentType: RequestType = 0) : Promise<Response<T>> {
 

@@ -3,4 +3,5 @@ export default interface Props {
     closeModal: () => void,
     text: string,
     actionConfirm: any
+    color: string | undefined
 }

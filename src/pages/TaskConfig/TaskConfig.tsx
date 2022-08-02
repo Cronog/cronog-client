@@ -185,6 +185,7 @@ const TaskConfig = (props : Props) => {
             </div>
           </div>
           <ModalConfirm
+          color={props.currentCronog.color}
           showModal={showModalConfirm}
           closeModal={() => setShowModalConfirm(false)}
           text="Confirma a exclusão? Todas as tarefas serão perdidas"

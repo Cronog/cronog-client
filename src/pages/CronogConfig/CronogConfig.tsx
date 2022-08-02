@@ -313,6 +313,7 @@ const CronogConfig = () => {
           onSelected={(value) => setColor(value)}
           />
           <ModalConfirm
+          color={color}
           showModal={showModalConfirm}
           closeModal={() => setShowModalConfirm(false)}
           text="Confirma a exclusão? Todas as tarefas serão perdidas"

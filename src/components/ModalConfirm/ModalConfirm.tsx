@@ -26,12 +26,16 @@ const ModalConfirm = (props : Props) => {
                 </div>
                 <div className='flex justify-around'>
                     <Button 
-                    classCss='btn-main-color h-10 !bg-white !text-fuchsia-800' 
+                    classCss='h-10 !bg-white'
+                    borderColor={props.color}
+                    textColor={props.color}
                     action={props.closeModal}>
                         CANCELAR
                     </Button>
                     <Button 
-                    classCss='btn-main-color' 
+                    backgroundColor={props.color}
+                    borderColor={props.color}
+                    textColor={"white"}
                     action={props.actionConfirm}>
                         CONFIRMAR
                     </Button>

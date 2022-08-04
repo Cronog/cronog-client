@@ -2,14 +2,14 @@ import { useRef, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Template from "../../../components/Template";
 import { showToast } from "../../../components/Toast/Toast";
-import "../auth.styles.css";
 
 import * as authUtils from "../../../utils/auth";
 
-import "../auth.styles.css";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import Loading from "../../../components/Loading";
+
+import "../auth.styles.css";
 
 const logo = require("../../../assets/logo.png");
 

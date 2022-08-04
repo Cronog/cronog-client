@@ -70,7 +70,6 @@ const Register = () => {
         type="email"
         placeholder="Email"
         initialValue={email}
-        classCssContainer="mt-20"
         classCss="input-auth color-auth"
         ref={refEmail}
         events={{}}

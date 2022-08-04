@@ -16,7 +16,7 @@ import Select from "../../components/Select";
 import Input from "../../components/Input";
 
 //components external
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GoDiffAdded } from "react-icons/go";
 
@@ -52,7 +52,7 @@ const CronogConfig = () => {
   const [showModalColors, setShowModalColors] = useState<boolean>(false);
   //object
   const [weekDays, setWeekDays] = useState<Days[]>();
-  const [icon, setIcon] = useState<IconProp>();
+  const [icon, setIcon] = useState<IconDefinition>();
   const [initialData, setInitialData] = useState<Cronog>();
   const [type, setType] = useState<typeCronog>(0);
   //number
@@ -304,6 +304,8 @@ const CronogConfig = () => {
           </div>
           <ModalSelectionIcons 
           showModal={showModalIcons}
+          iconSelected={icon}
+          colorSelected={color}
           closeModal={() => setShowModalIcons(false)}
           onSelected={(value) => setIcon(value)}
           />

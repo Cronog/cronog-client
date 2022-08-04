@@ -8,6 +8,7 @@ import "./styles.css"
 import Props from './props';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { BsFillCheckCircleFill } from "react-icons/bs";
 
 const ModalSelectionIcons = (props : Props) => {
 
@@ -34,16 +35,25 @@ const ModalSelectionIcons = (props : Props) => {
           classCssBody='flex overflow-y-auto flex-wrap justify-between'
           renderBody={
               <>
-                {icons.map(icon=> (
+                {icons.map(icon => (
+                  <div className="container-icon">
+                    {
+                      props.iconSelected ? 
+                        props.iconSelected.iconName == icon.iconName && 
+                          <BsFillCheckCircleFill className="absolute" size={25} opacity={0.7} color={"black"}/> 
+                        : 
+                        <></>
+                    }
                     <FontAwesomeIcon
+                    color={props.colorSelected}
                     onClick={() => selectIcon(icon)}
                     style={{
-                        height: "60px",
-                        width: "30%",
-                        marginBottom: "20px",
+                        height: "100%",
+                        width: "100%",
                     }}
                     id={icon.iconName} 
                     icon={icon} />
+                  </div>
                 ))}
             </>
           }

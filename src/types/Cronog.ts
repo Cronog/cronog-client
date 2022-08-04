@@ -1,4 +1,4 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import * as yup from 'yup';
 import { Days } from "./Days";
 import { Task } from './Task';
@@ -12,7 +12,7 @@ export type Cronog = {
     color: string,
     date?: string,
     time?: string,
-    icon: IconProp,
+    icon: IconDefinition,
     weekdays?: Array<Days>,
     type: typeCronog,
     title: string,

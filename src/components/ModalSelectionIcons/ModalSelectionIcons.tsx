@@ -24,7 +24,11 @@ const ModalSelectionIcons = (props : Props) => {
           hideMenuHamburguer
           classCssHeader="ml-auto text-5xl !p-5"
           renderHeader={
-              <IoClose onClick={props.closeModal}/>
+            <IoClose 
+            color={"black"} 
+            size={40}
+            onClick={() => props.closeModal()}
+            />
           }
           colorHeader="white"
           classCssBody='flex overflow-y-auto flex-wrap justify-between'

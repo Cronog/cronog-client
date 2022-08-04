@@ -309,6 +309,7 @@ const CronogConfig = () => {
           />
           <ModalSelectionColor 
           showModal={showModalColors}
+          colorSelected={color}
           closeModal={() => setShowModalColors(false)}
           onSelected={(value) => setColor(value)}
           />

@@ -7,6 +7,7 @@ import { getColors } from "../../utils/color";
 import { Color } from "../../types/Color";
 import Template from "../Template";
 import { IoClose } from "react-icons/io5";
+import { BsCheckLg } from "react-icons/bs";
 
 const ModalSelectionColor = (props : Props) => {
 
@@ -43,7 +44,9 @@ const ModalSelectionColor = (props : Props) => {
               className="item-color rounded-md flex flex-col"
               onClick={() => selectColor(item.code)}
               >
-                  <div className="w-full h-full rounded-md" style={{backgroundColor: item.code}}></div>
+                  <div className="w-full h-full rounded-md flex items-center justify-center" style={{backgroundColor: item.code}}>
+                    {props.colorSelected == item.code && <BsCheckLg color="white" size={25} />}
+                  </div>
                   <div className="text-center">{item.name}</div>
               </div>)}
           </div>

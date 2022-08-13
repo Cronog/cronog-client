@@ -1,16 +1,9 @@
+import { Dayjs } from "dayjs"
+
 export type Credentials = {
-    apiKey: string
-    appName:  string
-    createdAt: string
     email: string
-    emailVerified: boolean
-    isAnonymous: boolean
-    lastLoginAt: string
-    providerData: []
-    stsTokenManager: {
-        accessToken: string
-        expirationTime: number
-        refreshToken: string
-    }
+    accessToken: string
+    refreshToken: string
     uid: string
+    updateAt: Dayjs
 }

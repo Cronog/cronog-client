@@ -3,6 +3,7 @@ import { Response } from "../types/Response";
 import { getCredentials } from "./auth";
 import { getBackEnd } from "./backend";
 import { arrayBufferToDataUri, dataURItoBlob } from "./general";
+import { RequestType } from "../types/RequestType";
 
 export const getTaskById = async (id: string) : Promise<Response<Task>> => {
     const response = await getBackEnd<Task>("GET", `/task/${getCredentials()?.uid}/${id}`)
@@ -22,7 +23,7 @@ export const saveTask = async (task: Task, images: string[]) : Promise<Response<
     fd.append('data', JSON.stringify(task))
     images.forEach(image => fd.append('img', dataURItoBlob(image)!))
 
-    const response = await getBackEnd("POST", "/task", fd, 1);
+    const response = await getBackEnd("POST", "/task", fd, RequestType.formData);
     return response;
 }
 
@@ -32,7 +33,7 @@ export const updateTask = async (task : Task, images: string[], id : string, cro
     fd.append('data', JSON.stringify(task))
     images.forEach(image => fd.append('img', dataURItoBlob(image)!))
 
-    const response = await getBackEnd("PUT", `/task/${cronogId}/${id}`, fd, 1);
+    const response = await getBackEnd("PUT", `/task/${cronogId}/${id}`, fd, RequestType.formData);
     return response;
 }
 

@@ -3,12 +3,13 @@ import { getBackEnd } from "./backend";
 import Login from "../types/Login";
 import Response from "../types/Response";
 import { Credentials } from "../types/Credentials";
+import dayjs from "dayjs";
 
 export const singIn = async (login : Login) : Promise<Response> => {
     const response = await getBackEnd("POST", "/auth/singin", login)
 
     if(response.success)
-        localStorage.setItem("user", JSON.stringify(response.data))
+        saveCredentials(response.data)
 
     return response;
 }
@@ -47,4 +48,21 @@ export const getCredentials = () : Credentials | undefined  => {
     if(!credentials) return undefined;
     
     return JSON.parse(credentials) as Credentials;
+}
+
+const saveCredentials = (credentials: any) => {
+    localStorage.setItem("user", JSON.stringify({
+        accessToken: credentials.access_token || credentials.stsTokenManager.accessToken,
+        refreshToken: credentials.refresh_token || credentials.stsTokenManager.refreshToken,
+        uid: credentials.user_id || credentials.uid,
+        email: getCredentials()?.email || credentials.email,
+        updateAt: dayjs()
+    } as Credentials));
+}
+
+export const renewAccessToken = async () : Promise<Response> => {
+    const response = await getBackEnd("GET", `/auth/refresh/${getCredentials()?.refreshToken}`)
+    if(response.success)
+        saveCredentials(response.data)
+    return response;
 }

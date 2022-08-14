@@ -3,6 +3,7 @@ import Button from '../Button'
 import Modal from 'react-modal'
 
 import Props from './props'
+import { IoClose } from 'react-icons/io5'
 
 const ModalConfirm = (props : Props) => {
   return (
@@ -18,7 +19,14 @@ const ModalConfirm = (props : Props) => {
         <Template 
         hideMenuHamburguer
         colorHeader="white"
-        classCssBody='flex overflow-y-auto flex-wrap justify-between'
+        classCssBody='flex overflow-y-auto flex-wrap justify-center'
+        renderHeader={
+            <IoClose
+            color={props.color} 
+            size={40}
+            onClick={() => props.closeModal()}/>
+          }
+        classCssHeader={"flex !justify-end"}
         renderBody={
             <div className='flex flex-col justify-between'>
                 <div className='flex h-15 justify-center text-center'>
@@ -36,7 +44,10 @@ const ModalConfirm = (props : Props) => {
                     backgroundColor={props.color}
                     borderColor={props.color}
                     textColor={"white"}
-                    action={props.actionConfirm}>
+                    action={() => {
+                        props.closeModal()
+                        props.actionConfirm()
+                    }}>
                         CONFIRMAR
                     </Button>
                 </div>

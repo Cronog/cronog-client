@@ -7,7 +7,15 @@ const linkBackEnd = process.env.REACT_APP_API_ENVIRONMENT ? process.env.REACT_AP
 
 export async function getBackEnd<T = {}>(method : string, path : string, body? : any, contentType: RequestType = RequestType.json) : Promise<Response<T>> {
 
-    let headers = { "tokenAuth" : getCredentials()?.accessToken || "" }
+    let headers;
+
+    if(contentType == RequestType.formData)
+        headers = { "token-auth" : getCredentials()?.accessToken || "" }
+    else
+        headers = { 
+            "content-type": "application/json",
+            "token-auth" : getCredentials()?.accessToken || ""
+        }
 
     const response = await fetch(linkBackEnd + path, {
         method: method,
@@ -19,7 +27,7 @@ export async function getBackEnd<T = {}>(method : string, path : string, body? :
 
     if(data.status == 401){
         await renewAccessToken();
-        await getBackEnd(method, path, body, contentType);
+        return await getBackEnd(method, path, body, contentType);
     }
     
     return resolveResponse(data)

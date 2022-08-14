@@ -27,3 +27,15 @@ export const deleteCronog = async (id : string | undefined) : Promise<Response<a
     const response = await getBackEnd("DELETE", `/cronog/${getCredentials()?.uid}/${id}`);
     return response;
 }
+
+export const setUnfinishedCronog = (cronog : Cronog) => {
+    localStorage.setItem("unfinishedCronog", JSON.stringify(cronog));
+}
+
+export const getUnfinishedCronog = () : Cronog => {
+    return JSON.parse(localStorage.getItem("unfinishedCronog")!)
+}
+
+export const clearUnfinishedCronog = () => {
+    localStorage.removeItem("unfinishedCronog");
+}

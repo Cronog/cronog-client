@@ -38,7 +38,7 @@ const CronogConfig = () => {
 
   //useState's
   //strings
-  const [titlePage, setTitlePage] = useState<string>();
+  const [titlePage, setTitlePage] = useState<string>("Novo Cronog");
   const [title, setTitle] = useState<string>();
   const [day, setDay] = useState<string>();
   const [hour, setHour] = useState<string>();
@@ -58,9 +58,9 @@ const CronogConfig = () => {
   //number
   const [notificationId, setNotificationId] = useState<number>(0);
 
-  //useEffect's
+  //useEffects
   useEffect(() => {
-    if(id){
+    if(id && id != "-1"){
       cronogUtils.getCronogById(id).then((data) => {
         if(data.success && data.data){
           setInitialData(data.data);
@@ -76,8 +76,19 @@ const CronogConfig = () => {
         }
       })
       setTitlePage("Editar Cronog");
+    }
+    else if(id){
+      const data = cronogUtils.getUnfinishedCronog()
+      setInitialData(data);
+      setTitle(data.title);
+      setType(data.type)
+      setWeekDays(data.weekdays);
+      setColor(data.color);
+      setIcon(data.icon);
+      setDay(data.date);
+      setHour(data.time);
+      setLoadingPage(false);
     }else{
-      setTitlePage("Novo Cronog");
       setLoadingPage(false);
     }
   }, [id]);
@@ -95,6 +106,20 @@ const CronogConfig = () => {
       if(weekDays.length == 7) setType(typeCronog.diary);
     }
   }, [weekDays]);
+
+  useEffect(() => {
+    if(title && type && (!id || id == "-1")){
+      cronogUtils.setUnfinishedCronog({
+        title: title,
+        type: type,
+        weekdays: weekDays,
+        date: day,
+        time: hour,
+        color: color,
+        icon: icon,
+      } as Cronog)
+    }
+  }, [title, type, weekDays, day, hour, color, icon])
 
   //functions
   const saveCronog = async () => {
@@ -117,13 +142,14 @@ const CronogConfig = () => {
         .then(async () => {
 
           let response;
-          if(id)
+          if(id && id != "-1")
             response = await cronogUtils.updateCronog(payload, id);
           else
             response = await cronogUtils.saveCronog(payload);
 
           if(response.success){
             showToast("success", response.message);
+            cronogUtils.clearUnfinishedCronog()
             setNotification(response.data, payload);
             history.push("/home");
           }else{
@@ -159,6 +185,7 @@ const CronogConfig = () => {
     classCssHeader="header-cronog"
     colorHeader={color}
     pathBack="/home"
+    backAction={() => id && id == "-1" ? cronogUtils.clearUnfinishedCronog() : ""}
     renderHeader={<>{titlePage}</>}
       classCssBody="flex flex-col"
       renderBody={
@@ -283,7 +310,7 @@ const CronogConfig = () => {
             </div>
           </div>
           <div className="flex flex-col h-full justify-end">
-            {id && (
+            {id && id != "-1" && (
               <Button 
               classCss="h-10"
               textColor={color}

@@ -1,32 +1,29 @@
 import { useHistory, useParams } from "react-router-dom"
-import { Camera, CameraResultType } from '@capacitor/camera';
-import Template from "../../components/Template"
-import Button from "../../components/Button";
 import React, { useEffect, useState } from "react";
-import { BsImage } from "react-icons/bs"
-import * as taskUtils from "../../utils/task";
+import { connect } from "react-redux";
 import * as yup from "yup";
 
-import "./styles.css";
+import Template from "../../components/Template"
+import Button from "../../components/Button";
 import Loading from "../../components/Loading";
-import { Cronog } from "../../types/Cronog";
-import { getCronogById } from "../../utils/cronog";
-import { showToast } from "../../components/Toast/Toast";
-import { schemaTask, Task } from "../../types/Task";
 import ModalConfirm from "../../components/ModalConfirm";
-import { connect } from "react-redux";
-import { Props } from "./props";
 import Input from "../../components/Input";
 import TextArea from "../../components/TextArea";
 import ImagePick from "../../components/ImagePick";
+import { showToast } from "../../components/Toast/Toast";
+
+import { schemaTask, Task } from "../../types/Task";
+import { Props } from "./props";
+import * as taskUtils from "../../utils/task";
+
+import "./styles.css";
 
 const TaskConfig = (props : Props) => {
 
     const history = useHistory();
-    const { cronogId, order, id } = useParams<{ cronogId: string, order: string, id?: string }>();
+    let { cronogId, order, id } = useParams<{ cronogId: string, order: string, id?: string }>();
 
-
-    const [titlePage, setTitlePage] = useState<string>();
+    const [titlePage, setTitlePage] = useState<string>("Nova Tarefa");
     const [images, setImages] = useState<string[] | undefined>();
     const [title, setTitle] = useState<string>();
     const [description, setDescription] = useState<string>();
@@ -35,29 +32,45 @@ const TaskConfig = (props : Props) => {
     const [loadingDelete, setLoadingDelete] = useState<boolean>(false);
     const [showModalConfirm, setShowModalConfirm] = useState<boolean>(false);
     const [createAt, setCreateAt] = useState<Date>(new Date());
-    const [cronog, setCronog] = useState<Cronog>();
 
     useEffect(() => {
-      getCronogById(cronogId).then(data => {
-        if(data.success) setCronog(data.data)
-      })
-      if(id){
-
+      if(id && id != "-1"){
         taskUtils.getTaskById(id).then(data => {
           if(data.success){
-            setTitle(data.data?.title)
-            setImages(data.data?.imgs)
-            setDescription(data.data?.description)
-            setCreateAt(data.data?.createAt || new Date())
+            setTitle(data.data!.title)
+            setImages(data.data!.imgs)
+            setDescription(data.data!.description)
+            setCreateAt(data.data!.createAt!)
           }
           setLoadingPage(false);
         })
         setTitlePage("Editar Tarefa");
-      }else{
-        setTitlePage("Nova Tarefa");
+      }
+      else if(id){
+        const data = taskUtils.getUnfinishedTask(cronogId)
+        setTitle(data.title)
+        setImages(data.imgs)
+        setDescription(data.description)
+        setCreateAt(data.createAt)
         setLoadingPage(false);
       }
-    }, [])
+      else{
+        setLoadingPage(false);
+      }
+    }, [id])
+
+    useEffect(() => {
+      if(title && images && (!id || id == "-1")){
+        taskUtils.setUnfinishedTask({
+          cronogId: cronogId,
+          title: title,
+          imgs: images,
+          createAt: createAt,
+          order: parseInt(order),
+          description: description,
+        } as Task, cronogId)
+      }
+    }, [title, images, createAt, description])
 
   //functionS
   const saveTask = async () => {
@@ -76,13 +89,14 @@ const TaskConfig = (props : Props) => {
         .then(async () => {
           let response;
           payload.imgs = [];
-          if(id)
+          if(id && id != "-1")
             response = await taskUtils.updateTask(payload, images!, id, cronogId);
           else
             response = await taskUtils.saveTask(payload, images!);
 
           if(response.success){
             showToast("success", response.message);
+            taskUtils.clearUnfinishedTask(cronogId)
             history.push(`/home/cronog-detail/${cronogId}`);
           }else{
             showToast("error", response.message);
@@ -95,7 +109,6 @@ const TaskConfig = (props : Props) => {
   }
 
   const deleteTask = async () => {
-    setShowModalConfirm(false);
     setLoadingDelete(true);
     const response = await taskUtils.deleteTask(id, cronogId);
 
@@ -114,6 +127,7 @@ const TaskConfig = (props : Props) => {
     colorMenuHamburguer="white"
     classCssBody="overflow-y-auto"
     pathBack={`/home/cronog-detail/${cronogId}`}
+    backAction={() => id && id == "-1" ? taskUtils.clearUnfinishedTask(cronogId) : ""}
     renderHeader={
         <>{titlePage}</>
     }
@@ -164,7 +178,7 @@ const TaskConfig = (props : Props) => {
               />
               </div>
             <div className="flex flex-1 flex-col w-full justify-end">
-              {id && (
+              {id && id != "-1" && (
                 <Button
                 textColor={props.currentCronog.color}
                 borderColor={props.currentCronog.color}

@@ -1,22 +1,27 @@
-import Template from "../../components/Template";
-
-import "./styles.css";
-import { useHistory, useParams } from "react-router-dom";
-import Button from "../../components/Button";
-import { IoIosMore } from "react-icons/io";
 import { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { connect } from "react-redux";
+
+import Template from "../../components/Template";
+import Button from "../../components/Button";
+import ModalSelectionPreviewMode from "../../components/ModalSelectionPreviewMode";
+import Loading from "../../components/Loading";
+import ItemTaskSlide from "../../components/ItemTaskSlide";
+import ModalAlert from "../../components/ModalAlert";
+import ItemTaskList from "../../components/ItemTaskList";
+
+import { IoIosMore } from "react-icons/io";
 import { AiOutlinePlusSquare } from "react-icons/ai"
 import { IoEyeSharp } from "react-icons/io5"
+
 import { PreviewMode } from "../../types/PreviewMode";
-import ModalSelectionPreviewMode from "../../components/ModalSelectionPreviewMode";
 import { getTaskByCronogId } from "../../utils/task";
 import { Task } from "../../types/Task";
-import ItemTaskList from "../../components/ItemTaskList";
-import Loading from "../../components/Loading";
-import { connect } from "react-redux";
-import { Props } from "./props";
-import ItemTaskSlide from "../../components/ItemTaskSlide";
 import * as taskUtils from "../../utils/task";
+
+import { Props } from "./props";
+
+import "./styles.css";
 
 const CronogDetail = (props : Props) => {
 
@@ -26,6 +31,7 @@ const CronogDetail = (props : Props) => {
   const [moreOptions, setMoreOptions] = useState<boolean>(false);
   const [loadingPage, setLoadingPage] = useState<boolean>(true);
   const [showModalPreviewMode, setShowModalPreviewMode] = useState<boolean>(false);
+  const [showModalAlert, setShowModalAlert] = useState<boolean>(false);
   const [tasks, setTasks] = useState<Task[]>();
   const [previewMode, setPreviewMode] = useState<PreviewMode>(0);
 
@@ -48,10 +54,10 @@ const CronogDetail = (props : Props) => {
     (
       <>
       {tasks && <>
-        {previewMode == 0 && tasks?.map(item => <ItemTaskList key={item.id} color={props.currentCronog.color} task={item} />)}
-        {previewMode == 1 && tasks?.map(item => <ItemTaskSlide key={item.id} color={props.currentCronog.color} task={item} />)}
-        {previewMode == 2 && taskUtils.firstLastTask(tasks).map(item => <ItemTaskList key={item.id} color={props.currentCronog.color} task={item} />)}
-        {previewMode == 3 && taskUtils.firstLastTask(tasks).map(item => <ItemTaskSlide key={item.id} color={props.currentCronog.color} task={item} />)}
+        {previewMode == PreviewMode.list && tasks?.map(item => <ItemTaskList key={item.id} color={props.currentCronog.color} task={item} />)}
+        {previewMode == PreviewMode.slide && tasks?.map(item => <ItemTaskSlide key={item.id} color={props.currentCronog.color} task={item} />)}
+        {previewMode == PreviewMode.listFirstLast && taskUtils.firstLastTask(tasks).map(item => <ItemTaskList key={item.id} color={props.currentCronog.color} task={item} />)}
+        {previewMode == PreviewMode.slideFirstLast && taskUtils.firstLastTask(tasks).map(item => <ItemTaskSlide key={item.id} color={props.currentCronog.color} task={item} />)}
       </>
       }
         <div className="container-btn-opt">
@@ -61,13 +67,20 @@ const CronogDetail = (props : Props) => {
               <Button
               backgroundColor={props.currentCronog.color}
               classCss={"!border-white"}
-              action={() => history.push(`/home/task-config/${id}/${tasks?.length || 0 + 1}`)}>
+              action={() => {
+                taskUtils.getUnfinishedTask(id)
+                  ? 
+                setShowModalAlert(true) 
+                  : 
+                history.push(`/home/task-config/${id}/${tasks?.length ? tasks.length + 1 : 1}`)
+                
+              }}>
                 <AiOutlinePlusSquare size={40} />
               </Button>
               <Button
                 backgroundColor={props.currentCronog.color}
                 classCss={"!border-white"}
-                action={() => setMoreOptions(true)}>
+                action={() => setMoreOptions(false)}>
                   <IoEyeSharp onClick={() => setShowModalPreviewMode(true)} size={40} />
               </Button>
             </div>
@@ -83,6 +96,17 @@ const CronogDetail = (props : Props) => {
       color={props.currentCronog.color}
       onSelected={(value) => setPreviewMode(value)}
       showModal={showModalPreviewMode} 
+      />
+      <ModalAlert 
+      type="task"
+      closeModal={() => setShowModalAlert(false)}
+      showModal={showModalAlert}
+      actionConfirm={() => history.push(`/home/task-config/${id}/${tasks?.length ? tasks.length + 1 : 1}/-1`)}
+      actionDecline={() => {
+          taskUtils.clearUnfinishedTask(id)
+          history.push(`/home/task-config/${id}/${tasks?.length ? tasks.length + 1 : 1}`)
+      }}
+      color={props.currentCronog.color}
       />
       </>
     )

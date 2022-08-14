@@ -49,3 +49,15 @@ export const firstLastTask = (tasks: Task[]) : Task[] => {
 
     return [tasks[0], tasks[tasks.length - 1]];
 }
+
+export const setUnfinishedTask = (task : Task, cronogId : string) => {
+    localStorage.setItem(`unfinishedTask-${cronogId}`, JSON.stringify(task));
+}
+
+export const getUnfinishedTask = (cronogId : string) : Task => {
+    return JSON.parse(localStorage.getItem(`unfinishedTask-${cronogId}`)!)
+}
+
+export const clearUnfinishedTask = (cronogId : string) => {
+    localStorage.removeItem(`unfinishedTask-${cronogId}`);
+}

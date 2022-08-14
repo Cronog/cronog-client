@@ -9,11 +9,12 @@ import { AiOutlinePlusSquare, AiOutlineSearch } from "react-icons/ai";
 import "./styles.css";
 import Template from "../../components/Template";
 import Loading from "../../components/Loading";
-import { getCronogByUserId, updateCronog } from "../../utils/cronog";
+import * as cronogUtils from "../../utils/cronog";
 import { Cronog as CronogType } from "../../types/Cronog";
 import * as cronogActions from "../../redux/actions/cronog";
 import { connect } from "react-redux";
 import Props from "./props";
+import ModalAlert from "../../components/ModalAlert";
 
 const Home = (props: Props) => {
 
@@ -24,16 +25,17 @@ const Home = (props: Props) => {
     const [updateDisplay, setUpdateDisplay] = useState<boolean>(false);
     const [cronogs, setCronogs] = useState<CronogType[]>();
     const [textSearch, setTextSearch] = useState<string>();
+    const [showModalAlert, setShowModalAlert] = useState<boolean>(false);
 
     useEffect(() => {
         cronogs?.forEach((item, index) => {
             item.order = index;
-            updateCronog(item, item.id);
+            cronogUtils.updateCronog(item, item.id);
         })
     }, [updateDisplay])
 
     useEffect(() => {
-        getCronogByUserId().then(data => {
+        cronogUtils.getCronogByUserId().then(data => {
             if(data.success) {
                 setCronogs(data.data);
                 if(props.setCronogs) props.setCronogs(data.data || [] as CronogType[]);
@@ -91,10 +93,26 @@ const Home = (props: Props) => {
              <div className="container-btn-add-cronog">
                 <Button
                 classCss="btn-main-color"
-                action={() => history.push("home/cronog-config")}>
+                action={() => 
+                    cronogUtils.getUnfinishedCronog() 
+                        ? 
+                    setShowModalAlert(true) 
+                        : 
+                    history.push("home/cronog-config")}>
                     <AiOutlinePlusSquare />
                 </Button>
             </div>
+            <ModalAlert 
+            type="cronog"
+            closeModal={() => setShowModalAlert(false)}
+            showModal={showModalAlert}
+            actionConfirm={() => history.push("home/cronog-config/-1")}
+            actionDecline={() => {
+                cronogUtils.clearUnfinishedCronog()
+                history.push("home/cronog-config")
+            }}
+            color={"var(--main-color)"}
+            />
         </>
     }
     />

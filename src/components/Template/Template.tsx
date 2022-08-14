@@ -30,7 +30,7 @@ const Template = (props : Props) => {
         style={{
           "--color-header": props.colorHeader || "var(--main-color)"
         } as React.CSSProperties}>
-            {props.pathBack ? <BackButton path={props.pathBack} color="white"/> : <></>}
+            {props.pathBack ? <BackButton path={props.pathBack} actionClick={props.backAction} color="white"/> : <></>}
             {props.renderHeader ? props.renderHeader : <></>}
             {props.hideMenuHamburguer ? <></> : <HamburguerMenu color={props.colorMenuHamburguer} /> }
         </div>

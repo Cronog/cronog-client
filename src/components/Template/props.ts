@@ -12,4 +12,5 @@ export default interface Props {
     colorHeader?: string;
     colorBody?: string;
     pathBack? : string;
+    backAction? : () => void
 }

@@ -12,7 +12,11 @@ const BackButton = (props : Props) => {
                 color: props.color || "black"
             }}
             size={props.size || "35"}
-            onClick={() => history.push(props.path)}/>
+            onClick={() => {
+                history.push(props.path)
+                if(props.actionClick)
+                    props.actionClick()
+            }}/>
 }
 
 export default BackButton

@@ -18,6 +18,7 @@
     "@types/jest": "^27.4.1",
     "@types/node": "^16.11.26",
     "@types/react": "^17.0.43",
+    "@types/react-dnd": "^3.0.2",
     "@types/react-dom": "^17.0.14",
     "dayjs": "^1.11.1",
     "firebase": "^9.6.10",
@@ -46,7 +47,6 @@
     "build-storybook": "build-storybook -s public",
     "sync": "npx cap sync android&npx cap copy android",
     "sync-open": "npx cap sync android&npx cap copy android&npx cap open android"
-
   },
   "eslintConfig": {
     "extends": [

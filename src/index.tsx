@@ -15,7 +15,7 @@ import './index.css';
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <DndProvider backend={TouchBackend} options={{ delayTouchStart : 1000 }}>
+      <DndProvider backend={TouchBackend} options={{ delayTouchStart : 100 }}>
           <App />
           <Toast />
           <Menu />

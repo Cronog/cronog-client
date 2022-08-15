@@ -22,6 +22,7 @@ const Home = (props: Props) => {
     const refInputSearchCronog = useRef<HTMLInputElement>(null);
     
     const [loading, setLoading] = useState<boolean>(true);
+    const [cronogsDisplay, setCronogsDisplay] = useState<JSX.Element[] | undefined>();
     const [updateDisplay, setUpdateDisplay] = useState<boolean>(false);
     const [cronogs, setCronogs] = useState<CronogType[]>();
     const [textSearch, setTextSearch] = useState<string>();
@@ -48,6 +49,10 @@ const Home = (props: Props) => {
     useEffect(() => {
         if(props.cronogs) setCronogs(props.cronogs?.filter(item => item.title.startsWith(textSearch!)))
     }, [textSearch])
+
+    useEffect(() => {
+        setCronogsDisplay(cronogs?.map((item, index) => <Cronog move={(from, to) => move(from, to)} index={index} cronog={item} />))
+    }, [cronogs, updateDisplay])
 
     const move = (from : number, to : number) => {
         setCronogs(prevState => {
@@ -85,12 +90,8 @@ const Home = (props: Props) => {
                     <AiOutlineSearch color="var(--main-color)" fontSize={"20px"} />
                 </div>
             </div>
-            <div
-                className="list-cronog"
-            >
-                {cronogs?.map((item, index) => <Cronog move={(from, to) => move(from, to)} index={index} cronog={item} />)}
-            </div>
-             <div className="container-btn-add-cronog">
+            <div className="list-cronog">{cronogsDisplay}</div>
+            <div className="container-btn-add-cronog">
                 <Button
                 classCss="btn-main-color"
                 action={() => 

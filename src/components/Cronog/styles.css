@@ -12,8 +12,36 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    -webkit-box-shadow: 0px 5px 4px -1px rgba(0,0,0,0.5); 
+box-shadow: 0px 5px 4px -1px rgba(0,0,0,0.5);
 }
 
 .container-cronog:nth-child(2n+1){
     margin-right: auto;
 }
+
+.animation-target{
+    animation: shake 0.82s infinite cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    0% {
+      transform: rotate(0deg);
+    }
+    
+    25% {
+      transform: rotate(2.5deg);
+    }
+  
+    50%{
+      transform: rotate(0deg);
+    }
+  
+    75% {
+      transform: rotate(-2.5deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+  }

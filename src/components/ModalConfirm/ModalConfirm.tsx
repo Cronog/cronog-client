@@ -28,7 +28,7 @@ const ModalConfirm = (props : Props) => {
           }
         classCssHeader={"flex !justify-end"}
         renderBody={
-            <div className='flex flex-col justify-between'>
+            <div className='flex flex-col justify-between min-w-full'>
                 <div className='flex h-15 justify-center text-center'>
                     {props.text}
                 </div>

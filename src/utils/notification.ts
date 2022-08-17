@@ -1,4 +1,4 @@
-import { LocalNotificationDescriptor, LocalNotifications, LocalNotificationSchema, Weekday } from "@capacitor/local-notifications";
+import { LocalNotificationDescriptor, LocalNotifications, LocalNotificationSchema } from "@capacitor/local-notifications";
 import { Cronog } from "../types/Cronog";
 
 export const setNotification = async (notificationId: number, cronog: Cronog) : Promise<boolean> => {
@@ -10,24 +10,28 @@ export const setNotification = async (notificationId: number, cronog: Cronog) : 
         notifications = cronog.weekdays?.map(item => {
             return {
                 id: parseInt(notificationId.toString().concat(item.toString())),
-                title: `Cronog-${cronog.title}`,
+                title: `${cronog.title}`,
                 body: "Já está na hora de começar... Vamos nessa?",
+                extra: cronog.id,
+                actionTypeId: "ACTION",
                 schedule: {
                     repeats: true,
                     on: {
                         weekday: item as number,
-                        hour: cronog.time ? parseInt(cronog.time.split(":")[0]) : 0,
-                        minute: cronog.time ? parseInt(cronog.time.split(":")[1]) : 0,
+                        hour: parseInt(cronog.time!.split(":")[0]),
+                        minute: parseInt(cronog.time!.split(":")[1]),
                         second: 0
                     }
                 }
             } as LocalNotificationSchema
         })
     }else{
-        notifications = [{ 
-            id: parseInt(notificationId.toString().concat("1")),
-            title: `Cronog-${cronog.title}`,
+        notifications = [{
+            id: parseInt(notificationId.toString().concat(cronog.date!)),
+            title: `${cronog.title}`,
             body: "Já está na hora de começar... Vamos nessa?",
+            extra: cronog,
+            actionTypeId: "ACTION"
         }]
     }
 
@@ -40,7 +44,6 @@ export const setNotification = async (notificationId: number, cronog: Cronog) : 
         return false;
     }
 }
-
 
 export const deleteNotification = async (notificationId: number, cronog: Cronog) : Promise<boolean> => {
     let notifications : LocalNotificationDescriptor[] = [];
@@ -59,12 +62,30 @@ export const deleteNotification = async (notificationId: number, cronog: Cronog)
     } catch (error) {
         return false;
     }
-} 
+}
 
-LocalNotifications.addListener('localNotificationReceived', async (notification) => {
-    // alert(JSON.stringify(notification))
-    // const t = await LocalNotifications.getPending()
-    // t.notifications.forEach(item => {
-    //      alert(JSON.stringify(item))
-    // })
+LocalNotifications.registerActionTypes({
+    types: [{
+        id: "ACTION",
+        actions: [
+            {
+                id: "OPEN",
+                title: "Vamos!",
+                foreground: true
+            },
+            {
+                id: "CANCEL",
+                title: "Agora não",
+                destructive: true
+            },
+        ]
+    }]
+})
+
+LocalNotifications.addListener('localNotificationActionPerformed', event => {
+    switch(event.actionId){
+        case "OPEN":
+            window.location.pathname = `/home/cronog-detail/${event.notification.extra}`
+            break;
+    }
 })

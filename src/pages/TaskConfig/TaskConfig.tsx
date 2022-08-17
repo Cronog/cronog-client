@@ -156,6 +156,7 @@ const TaskConfig = (props : Props) => {
             </div>
             <div className="w-full flex justify-center mb-5">
               <ImagePick 
+                activateScrollAnimation
                 color={props.currentCronog.color}
                 initialValue={images}
                 events={{

@@ -2,6 +2,7 @@
     width: 100%;
     display: flex;
     overflow-x: auto;
+    scroll-behavior: smooth;
 }
 
 .border-image-pick{
@@ -21,3 +22,9 @@
     background-color: var(--color-task);
     border-radius: 10px;
 }
+
+/* @keyframes scroll-tutorial {
+    0% {
+      transform: rotateX(
+    }
+  } */

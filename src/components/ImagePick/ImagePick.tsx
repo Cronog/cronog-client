@@ -32,12 +32,17 @@ function ImagePick(props: Props) {
 
     let container = document.querySelector(".container-image-pick")
 
-    if(!props.disabled){
+    if(props.activateScrollAnimation){
       container?.scrollTo({
-        left: container.scrollWidth
+        left: 150,
       })
+      setTimeout(() => {
+        container?.scrollTo({
+          left: 0,
+        })
+      }, 1000)
     }
-  }, [images])
+  }, [props.activateScrollAnimation, images])
 
   useEffect(() => {
     setShowModalImagePreview(imageShow ? true : false);

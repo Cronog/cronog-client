@@ -3,6 +3,7 @@ export default interface Props {
     color: string;
     cssClass?: string;
     disabled?: boolean;
+    activateScrollAnimation?: true;
     size?: number;
     events: {
         onChange?: (value: string[]) => void

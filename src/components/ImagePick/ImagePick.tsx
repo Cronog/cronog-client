@@ -1,11 +1,14 @@
-import { BsImage } from "react-icons/bs"
+import React, { useEffect, useState } from "react";
 import { Camera, CameraResultType } from '@capacitor/camera';
+
+import { IoClose } from "react-icons/io5";
+import { BsImage } from "react-icons/bs"
+import ModalImagePreview from "../ModalImagePreview";
+import ModalConfirm from "../ModalConfirm";
+
 import Props from "./props"
 
 import "./styles.css";
-import React, { useEffect, useState } from "react";
-import { IoClose } from "react-icons/io5";
-import ModalImagePreview from "../ModalImagePreview";
 
 function ImagePick(props: Props) {
   
@@ -14,6 +17,8 @@ function ImagePick(props: Props) {
   const [images, setImages] = useState<string[]>([]);
   const [imageShow, setImageShow] = useState<string>();
   const [showModalImagePreview, setShowModalImagePreview] = useState<boolean>(false);
+  const [showModalConfirm, setShowModalConfirm] = useState<boolean>(false);
+  const [indexRemoveImage, setIndexRemoveImage] = useState<number>();
   
   const { onChange } = props.events;
 
@@ -48,11 +53,12 @@ function ImagePick(props: Props) {
   };
 
   const removeImage = (index: number) => {
-    setImages(images.map((item, indexImage) => indexImage != index ? item : "").filter(item => item !=  ""))
+    setImages(prevState => prevState.filter((item, indexImage) => indexImage != index))
   }
 
-  const showImage = (image: string) => {
-    setImageShow(image);
+  const modalConfirmRemove = (index?: number) => {
+      setIndexRemoveImage(index);
+      setShowModalConfirm(prevState => !prevState);
   }
 
   return (
@@ -68,12 +74,12 @@ function ImagePick(props: Props) {
             className="absolute right-0" 
             color="white"
             size={50}
-            onClick={() => removeImage(index)}/>
+            onClick={() => modalConfirmRemove(index)}/>
           }
           <img
           className={`w-full h-full object-cover ${props.cssClass}`}
           src={image}
-          onClick={() => showImage(image)}
+          onClick={() => setImageShow(image)}
           alt="" /> 
         </div>
         ))
@@ -92,12 +98,18 @@ function ImagePick(props: Props) {
           </div>
       </div>
       )}
-
       <ModalImagePreview 
       color={props.color}
       image={imageShow!}
       showModal={showModalImagePreview}
       closeModal={() => setImageShow(undefined)}
+      />
+      <ModalConfirm
+      actionConfirm={() => removeImage(indexRemoveImage!)}
+      closeModal={() => modalConfirmRemove()}
+      color={props.color}
+      showModal={showModalConfirm}
+      text={"Confirmar exclusão da imagem?"}
       />
 
     </div>

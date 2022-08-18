@@ -1,3 +1,5 @@
+import { Rgb } from "../types/Color";
+
 export const base64ToArrayBuffer = (base64 : string) => {
     var binary_string = window.atob(base64);
     var len = binary_string.length;
@@ -37,3 +39,12 @@ export const dataURItoBlob = (dataURI : string | undefined) => {
     a.onload = (e) => callback(e.target?.result);
     a.readAsDataURL(blob || new Blob());
 }
+
+export const hexToRgb = (hexColor: string): Rgb | null => {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexColor);
+    return result ? {
+      red: parseInt(result[1], 16),
+      green: parseInt(result[2], 16),
+      blue: parseInt(result[3], 16)
+    } as Rgb: null;
+  }

@@ -12,9 +12,12 @@ import TextArea from "../../components/TextArea";
 import ImagePick from "../../components/ImagePick";
 import { showToast } from "../../components/Toast/Toast";
 
-import { schemaTask, Task } from "../../types/Task";
-import { Props } from "./props";
+import { setBetterContrast } from "../../utils/color";
 import * as taskUtils from "../../utils/task";
+
+import { schemaTask, Task } from "../../types/Task";
+
+import { Props } from "./props";
 
 import "./styles.css";
 
@@ -169,6 +172,7 @@ const TaskConfig = (props : Props) => {
                 id="taskConfig.description"
                 name="taskConfig.description"
                 initialValue={description}
+                colorText={setBetterContrast(props.currentCronog.color)}
                 colorBackground={props.currentCronog.color}
                 colorBorder={props.currentCronog.color}
                 maxLength={100}

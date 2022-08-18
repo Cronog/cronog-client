@@ -1,10 +1,10 @@
 import { ReactNode, useEffect, useState } from 'react'
 import Props from './props';
 
-const DaysWeek = (props : Props) => {
+const WeekDays = (props : Props) => {
 
     const [selectedWeekDays, setSelectedWeekDays] = useState<number[]>([]);
-    const daysWeek = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+    const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
     useEffect(() => {
         if(props.initialValue) setSelectedWeekDays(props.initialValue);
@@ -29,7 +29,7 @@ const DaysWeek = (props : Props) => {
         opacity: props.disabled ? 0.6 : 1
     }}
     >
-        {daysWeek.map((item, index) => {
+        {weekDays.map((item, index) => {
             return (
                 <div 
                 className="font-bold border-2 rounded-[50%] flex items-center justify-center" 
@@ -49,4 +49,4 @@ const DaysWeek = (props : Props) => {
   )
 }
 
-export default DaysWeek
+export default WeekDays

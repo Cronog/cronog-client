@@ -1,16 +1,16 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import DaysWeek from "./DaysWeek";
+import WeekDays from "./WeekDays";
 
 export default {
-  title: 'Components/DaysWeek',
-  component: DaysWeek,
+  title: 'Components/WeekDays',
+  component: WeekDays,
   argTypes: {
       color: { control: 'color' },
   },
-} as ComponentMeta<typeof DaysWeek>;
+} as ComponentMeta<typeof WeekDays>;
 
-const Template: ComponentStory<typeof DaysWeek> = (args) => <DaysWeek {...args} />;
+const Template: ComponentStory<typeof WeekDays> = (args) => <WeekDays {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {

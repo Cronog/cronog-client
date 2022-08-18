@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
 //components internal
-import DaysWeek from "../DaysWeek";
+import WeekDays from "../WeekDays";
 
 //components external
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -131,7 +131,7 @@ const Cronog = (props : Props) => {
           </div>
           {props.cronog.type != typeCronog.monthly && (
             <div className="mt-2">
-              <DaysWeek
+              <WeekDays
               color={props.cronog.color}
               initialValue={props.cronog.weekdays}
               size={20}

@@ -1,11 +1,11 @@
 //lib external
 import { useHistory, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import * as yup from 'yup';
 
 //components internal
 import Template from "../../components/Template";
-import DaysWeek from "../../components/DaysWeek";
+import WeekDays from "../../components/WeekDays";
 import ModalSelectionIcons from "../../components/ModalSelectionIcons";
 import Button from "../../components/Button";
 import { showToast } from "../../components/Toast/Toast";
@@ -239,12 +239,12 @@ const CronogConfig = () => {
             />
           </div>
           <div className="flex-1 mx-1 my-4 mb-12">
-            <DaysWeek
+            <WeekDays
               disabled={type == typeCronog.monthly ? true : false}
               color={color}
               size={45}
               initialValue={weekDays || initialData?.weekdays}
-              onChange={value => setWeekDays(value)}
+              onChange={(value: SetStateAction<Days[] | undefined>) => setWeekDays(value)}
             />
           </div>
           <div className="flex mb-12">

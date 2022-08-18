@@ -1,7 +1,6 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import * as yup from 'yup';
 import { Days } from "./Days";
-import { Task } from './Task';
 import { typeCronog } from "./TypeCronog";
 
 export type Cronog = {

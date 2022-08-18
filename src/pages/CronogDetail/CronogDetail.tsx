@@ -49,7 +49,7 @@ const CronogDetail = (props : Props) => {
     colorMenuHamburguer="white"
     classCssBody="flex flex-col overflow-y-auto"
     pathBack="/home"
-    renderHeader={<p>{props.currentCronog.title}</p>}
+    renderHeader={<p className="wrap-text-1 text-center max-w-[60%]">{props.currentCronog.title}</p>}
     renderBody={loadingPage ? <Loading color={props.currentCronog.color} size={"60"} /> :
     (
       <>

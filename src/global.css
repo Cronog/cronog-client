@@ -1,13 +1,13 @@
 .wrap-text-1 {
     overflow: hidden;
     -webkit-line-clamp: 1;
-    display: -webkit-box;
+    display: -webkit-box !important;
     -webkit-box-orient: vertical
 }
 
 .wrap-text-2 {
     overflow: hidden;
     -webkit-line-clamp: 2;
-    display: -webkit-box;
+    display: -webkit-box !important;
     -webkit-box-orient: vertical
 }

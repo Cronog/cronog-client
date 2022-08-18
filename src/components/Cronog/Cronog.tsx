@@ -65,7 +65,7 @@ const Cronog = (props : Props) => {
   dragRef(dropRef(ref));
 
   return (
-        <div
+      <div
       id={props.cronog.id}
       ref={ref}
       className={!isDragging && canDrop && isOver ? "container-cronog animation-target" : "container-cronog"}
@@ -96,7 +96,7 @@ const Cronog = (props : Props) => {
                 width: "40px"
               }}
             />
-            <div className="flex flex-1 justify-center items-center font-bold text-2xl">
+            <div className="flex flex-1 items-center font-bold text-2xl wrap-text-1 text-center h-8 pt-1">
               {props.cronog.title}
             </div>
           </div>

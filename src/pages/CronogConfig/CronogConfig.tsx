@@ -1,6 +1,7 @@
 //lib external
 import { useHistory, useParams } from "react-router-dom";
 import { SetStateAction, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import * as yup from 'yup';
 
 //components internal
@@ -30,7 +31,7 @@ import * as cronogUtils from "../../utils/cronog";
 import { getCredentials } from "../../utils/auth";
 import { setNotification } from "../../utils/notification";
 
-const CronogConfig = () => {
+const CronogConfig = (props: { cronogs : Cronog[] }) => {
 
   //hooks general
   const { id } = useParams<{ id?: string}>();
@@ -57,6 +58,7 @@ const CronogConfig = () => {
   const [type, setType] = useState<typeCronog>(0);
   //number
   const [notificationId, setNotificationId] = useState<number>(0);
+  const [order, setOrder] = useState<number | undefined>(undefined);
 
   //useEffects
   useEffect(() => {
@@ -72,6 +74,7 @@ const CronogConfig = () => {
           setIcon(data.data.icon);
           setDay(data.data.date);
           setHour(data.data.time);
+          setOrder(data.data.order);
           setLoadingPage(false);
         }
       })
@@ -127,7 +130,7 @@ const CronogConfig = () => {
       id: id,
       userId: getCredentials()?.uid,
       notificationId: notificationId,
-      order: 9999,
+      order: order || props.cronogs.length,
       title: title,
       type: type,
       icon: icon,
@@ -356,4 +359,13 @@ const CronogConfig = () => {
   )
 }
 
-export default CronogConfig
+const mapStateToProps = (state : any) => ({
+  cronogs: state.CronogReducer.cronogs,
+});
+
+const mapDispatchToProps = (dispatch : any) => ({});
+
+export default connect(
+mapStateToProps,
+mapDispatchToProps
+)(CronogConfig);

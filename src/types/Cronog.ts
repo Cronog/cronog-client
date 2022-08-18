@@ -7,7 +7,7 @@ export type Cronog = {
     id: string,
     userId: string,
     notificationId: number,
-    order?: number,
+    order: number,
     color: string,
     date?: string,
     time?: string,

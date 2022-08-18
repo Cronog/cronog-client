@@ -46,19 +46,18 @@ export const schemaCronog = yup.object().shape({
     }),
     time: yup.string().required('Escolha o horário'),
     icon: yup.object().shape({}).required('Selecione o icone'),
-    weekdays: yup.array(yup.number()).test({
+    weekdays: yup.array(yup.number())
+    .test({
         name: 'weekDaysRequired',
         message: 'Selecione pelo menos 1 dia',
         exclusive: false,
         test: (value, context) => {
-            if(context.parent.type === 2){
+            if(context.parent.type == typeCronog.monthly){
                 return true;
             }else{
-                return value ? true : false;
+                return value?.length == 0 ? false : true;
             }
         }
     })
-    .min(1, 'Selecione pelo menos 1 dia')
-    .required('Selecione pelo menos 1 dia'),
 });
 

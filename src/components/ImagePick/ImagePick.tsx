@@ -50,8 +50,10 @@ function ImagePick(props: Props) {
 
   const takePicture = async () => {
       const image = await Camera.getPhoto({
-        quality: 50,
-        resultType: CameraResultType.DataUrl
+        quality: 1,
+        resultType: CameraResultType.DataUrl,
+        promptLabelPicture: 'Tirar uma foto',
+        promptLabelPhoto: 'Escolher uma foto da galeria'
       });
 
       setImages(prevState => [...prevState, image.dataUrl!]);

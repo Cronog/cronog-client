@@ -46,7 +46,8 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "sync": "npx cap sync android&npx cap copy android",
-    "sync-open": "npx cap sync android&npx cap copy android&npx cap open android"
+    "sync-open": "npx cap sync android&npx cap copy android&npx cap open android",
+    "build-sync": "npm run build&npm run sync-open"
   },
   "eslintConfig": {
     "extends": [

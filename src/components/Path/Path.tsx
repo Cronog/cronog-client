@@ -16,7 +16,7 @@ const Path: FunctionComponent<Props> = (props): JSX.Element => {
 			if(logged){
 				return <Provider store={store}><rest.componente {...props} /></Provider>  
 			}else{
-				return <Redirect to={{ pathname:"/login" }} />
+				return <Redirect to={{ pathname:"/auth/login" }} />
 			};
 		}
 		}

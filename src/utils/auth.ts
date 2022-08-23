@@ -31,12 +31,8 @@ export const register = async (login : Login) : Promise<Response> => {
 
 export const authenticatedUser = async (requireAuthentication : boolean) : Promise<boolean> => {
     if(requireAuthentication){
-        if(requireAuthentication){
-            return getBackEnd("GET", "/auth/authenticatedUser")
-            .then(data => data.success);
-         }else{
-             return true;
-         }
+        const response = await getBackEnd<boolean>("GET", "/auth/authenticatedUser")
+        return !!response.data
     }else{
         return true
     }

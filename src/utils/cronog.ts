@@ -13,13 +13,13 @@ export const getCronogByUserId = async () : Promise<Response<Cronog[]>> => {
     return response;
 }
 
-export const saveCronog = async (cronog : Cronog) : Promise<Response<any>> => {
-    const response = await getBackEnd("POST", "/cronog", cronog);
+export const saveCronog = async (cronog : Cronog) : Promise<Response<number>> => {
+    const response = await getBackEnd<number>("POST", "/cronog", cronog);
     return response;
 }
 
-export const updateCronog = async (cronog : Cronog, id : string) : Promise<Response<any>> => {
-    const response = await getBackEnd("PUT", `/cronog/${getCredentials()?.uid}/${id}`, cronog);
+export const updateCronog = async (cronog : Cronog, id : string) : Promise<Response<number>> => {
+    const response = await getBackEnd<number>("PUT", `/cronog/${getCredentials()?.uid}/${id}`, cronog);
     return response;
 }
 

@@ -29,7 +29,7 @@ import { Days } from "../../types/Days";
 //functions
 import * as cronogUtils from "../../utils/cronog";
 import { getCredentials } from "../../utils/auth";
-import { setNotification } from "../../utils/notification";
+import * as notificationUtils from "../../utils/notification";
 
 const CronogConfig = (props: { cronogs : Cronog[] }) => {
 
@@ -130,7 +130,7 @@ const CronogConfig = (props: { cronogs : Cronog[] }) => {
       id: id,
       userId: getCredentials()?.uid,
       notificationId: notificationId,
-      order: order || props.cronogs.length,
+      order: order == 0 ? 0 : order || props.cronogs.length,
       title: title,
       type: type,
       icon: icon,
@@ -153,7 +153,7 @@ const CronogConfig = (props: { cronogs : Cronog[] }) => {
           if(response.success){
             showToast("success", response.message);
             cronogUtils.clearUnfinishedCronog()
-            setNotification(response.data, payload);
+            notificationUtils.setNotification(response.data!, payload);
             history.push("/home");
           }else{
             showToast("error", response.message);
@@ -172,7 +172,7 @@ const CronogConfig = (props: { cronogs : Cronog[] }) => {
 
     if(response.success){
       showToast("success", response.message);
-      
+      notificationUtils.setRecreateNotifications(true);
       history.push("/home");
     }else{
       showToast("error", response.message);

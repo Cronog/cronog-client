@@ -10,6 +10,7 @@ import Loading from "../../../components/Loading";
 import { Login as loginType } from "../../../types/Login";
 
 import * as authUtils from "../../../utils/auth";
+import { setRecreateNotifications } from "../../../utils/notification";
 
 import "../auth.styles.css";
 
@@ -25,7 +26,7 @@ const Login = () => {
   const [emailParam, setEmailParam] = useState<string | undefined>("");
 
   useEffect(() => {
-    // authUtils.authenticatedUser(true).then(data => data ? history.push("/home") : "")
+    // authUtils.authenticatedUser(false).then(data => data ? history.push("/home") : "")
   }, [history])
 
   const singIn = async () => {
@@ -35,6 +36,7 @@ const Login = () => {
       password: refPassword.current?.value
     } as loginType)
     if(response.success){
+      setRecreateNotifications(true)
       history.push("/home")
     }else{
       setIsLoading(false)

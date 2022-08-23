@@ -15,6 +15,7 @@ import * as cronogActions from "../../redux/actions/cronog";
 import { connect } from "react-redux";
 import Props from "./props";
 import ModalAlert from "../../components/ModalAlert";
+import * as notificationUtils from "../../utils/notification";
 
 const Home = (props: Props) => {
 
@@ -28,7 +29,7 @@ const Home = (props: Props) => {
     const [textSearch, setTextSearch] = useState<string>();
     const [showModalAlert, setShowModalAlert] = useState<boolean>(false);
 
-    useEffect(() => {
+    useEffect(() => {     
         cronogs?.forEach((item, index) => {
             item.order = index;
             cronogUtils.updateCronog(item, item.id);
@@ -40,8 +41,11 @@ const Home = (props: Props) => {
             if(data.success) {
                 setCronogs(data.data);
                 if(props.setCronogs) props.setCronogs(data.data || [] as CronogType[]);
+                if(data.data && notificationUtils.getRecreateNotifications()) {
+                    data.data.forEach(cronog => notificationUtils.setNotification(cronog.notificationId, cronog))
+                    notificationUtils.setRecreateNotifications(false)
+                }
             }
-            
             setLoading(false);
         });
     }, [])

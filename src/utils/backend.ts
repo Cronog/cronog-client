@@ -1,4 +1,3 @@
-import { showToast } from "../components/Toast/Toast";
 import { RequestType } from "../types/RequestType";
 import Response from "../types/Response";
 import { getCredentials, renewAccessToken, singOut } from "./auth";

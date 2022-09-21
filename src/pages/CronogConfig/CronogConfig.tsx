@@ -130,7 +130,7 @@ const CronogConfig = (props: { cronogs : Cronog[] }) => {
       id: id,
       userId: getCredentials()?.uid,
       notificationId: notificationId,
-      order: order == 0 ? 0 : order || props.cronogs.length,
+      order: order ?? props.cronogs.length,
       title: title,
       type: type,
       icon: icon,
